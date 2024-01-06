@@ -1,15 +1,27 @@
 export const webcomponents =
 {
-  "animal": [
+  "animals": [
     {
-      "componentName": "list",
-      "filePath": "./webcomponents/animal/animal-list.html"
+      "componentName": "ul",
+      "filePath": "./webcomponents/animals/animals-ul.html"
+    },
+    {
+      "componentName": "li",
+      "filePath": "./webcomponents/animals/animals-li.html"
+    },
+    {
+      "componentName": "view",
+      "filePath": "./webcomponents/animals/animals-view.html"
     }
   ],
-  "my": [
+  "home": [
     {
-      "componentName": "animal",
-      "filePath": "./webcomponents/my/my-animal.html"
+      "componentName": "navigation",
+      "filePath": "./webcomponents/home/home-navigation.html"
+    },
+    {
+      "componentName": "view",
+      "filePath": "./webcomponents/home/home-view.html"
     }
   ]
 }

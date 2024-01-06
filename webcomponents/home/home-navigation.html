@@ -1,0 +1,85 @@
+<script>
+  const nav = shadowDocument.querySelector("nav");
+  shadowDocument.querySelectorAll("a.navlink").forEach(a => {
+    a.addEventListener("click", event => {
+      event.preventDefault();
+      nav.querySelector(".active").classList.remove("active");
+      event.target.classList.add("active");
+      const url = event.target.getAttribute("href");
+      go(url);
+    });
+  });
+  // Back button clicked
+  window.addEventListener("popstate", event => {
+    // TODO: fix back button
+    if (event.state) {
+      go(event.state.route, false);
+    }
+  })
+
+  window.go = function (route, addToHistory = true) {
+    if (addToHistory) {
+      history.pushState({ route }, null, route);
+    }
+    let section = null;
+    switch (route) {
+      case "/":
+        section = document.createElement("home-view");
+        break;
+      case "/animals":
+        section = document.createElement("animals-view");
+        break;
+      case "/someother-view":
+        section = document.createElement("someother-view");
+        break;
+      default:
+    }
+    const main = document.querySelector("main");
+    while (main.firstChild) {
+      main.removeChild(main.firstChild);
+    }
+
+    if (section) {
+      main.appendChild(section);
+      // move to top
+      window.scrollX = 0;
+      window.scrollY = 0;
+    }
+  }
+  // Check the initial URL
+  go(location.pathname);
+</script>
+
+<style>
+  nav {
+    background-color: #144000;
+    overflow: hidden;
+  }
+
+  nav a {
+    float: left;
+    color: #ffd700;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  nav a:hover {
+    background-color: #ffff00;
+    color: #144000;
+  }
+
+  nav a.active {
+    background-color: #ffd700;
+    color: #144000;
+  }
+</style>
+
+<template>
+  <nav>
+    <a class="navlink active" href="/">Home</a>
+    <a class="navlink" href="/animals">Animals</a>
+    <a class="navlink" href="/someother-view">Something else</a>
+  </nav>
+</template>
