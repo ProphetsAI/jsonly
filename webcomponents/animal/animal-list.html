@@ -1,0 +1,19 @@
+<script>
+  const ul = shadowDocument.querySelector("ul");
+  state.forEach(entry => {
+    const myAnimal = document.createElement("my-animal");
+    myAnimal.dataset.state = JSON.stringify(entry);
+    ul.appendChild(myAnimal)
+  });
+</script>
+
+<style>
+  ul {
+    list-style-type: none;
+    white-space: pre-line;
+  }
+</style>
+
+<template>
+  <ul></ul>
+</template>

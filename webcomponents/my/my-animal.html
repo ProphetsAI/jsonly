@@ -1,0 +1,30 @@
+<script>
+  const { log } = await import('./modules/Logger.js');
+
+  const li = shadowDocument.querySelector("li");
+  li.before(`${state ? state.icon : ''}`);
+  li.addEventListener("click", function (e) {
+    log(state.sound);
+  })
+
+  const strong = shadowDocument.querySelector("strong");
+  strong.innerHTML = `Beware of the ${state ? state.animal : 'animal'}!`;
+</script>
+
+<style>
+  li {
+    cursor: pointer;
+    display:inline-block;
+  }
+  strong {
+    background-color: firebrick;
+    color: white;
+    padding: 4px;
+  }
+</style>
+
+<template>
+  <li>
+    <strong></strong>
+  </li>
+</template>
