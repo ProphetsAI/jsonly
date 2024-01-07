@@ -57,7 +57,9 @@ Here are some further guidelines: Use the pre-defined constants
 - ```state``` to access and ```setState()``` function to modify component-state
 - use dynamic ```await import``` to include your own modules
 
-That's basically everything. Happy coding!
+That's basically everything. **Happy coding!**
+
+[Examples](https://raw.githubusercontent.com/ProphezAI/jsonly/main/webcomponents) can be found in the webcomponents folder. It is recommended to stick to that pattern to keep your code clean, but of course you are free to customize at your own will!
 
 ## Component Lifecycle
 
