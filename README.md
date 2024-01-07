@@ -31,16 +31,18 @@ You can then access the app via https://localhost:5173 in your browser.
 ## Features
 
 - vanilla JavaScript
-- Vite with basicSsl plugin
 - built for SinglePageApplications (SPA)
-- support for WebComponents in dedicated .html files
-- WebComponents can be nested inside each other and reactive to state changes
+- following W3C standards as recommended by MDN
+- support for SingleFileComponents (SFC) in dedicated .html files
+- support for nesting WebComponents
 - ShadowDOM with support for template, script and style tags
+- support for reactive state changes
 - support for dynamic imports
-- pluggable navigation module using Component Router
+- pluggable navigation module using history-driven Component Router
 - support for inter-component event handling using BroadcastChannels
 - SQLite WebAssembly (WASM) for state management
 - support for OriginPrivateFileSystem (OPFS)
+- Vite with basicSsl plugin
 
 ## Feedback
 
