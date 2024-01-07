@@ -57,18 +57,30 @@ Here are some further guidelines: Use the pre-defined constants
 - ```state``` to access and ```setState()``` function to modify component-state
 - use dynamic ```await import``` to include your own modules
 
-That's basically everything. Happy coding"
+That's basically everything. Happy coding!
 
 ## Component Lifecycle
 
-In case you want some deeper insights: This graphic should help you understand how the component lifecycle of JSonly is working:
+In case you want some deeper insights: This lifecycle-graph should help you understand how the component in JSonly are working:
 
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/components-lifecycle.png)
 
-1. prefetch html components in ![index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
+1. prefetch html components in [index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
 2. declare your components in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this will happen automatically in the future)
-3. After having created your components you can instantiate them programmatically or by tag-name like in the ![animals-view.html](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/animals/animals-view.html)
+3. After having created your components you can instantiate them programmatically or by tag-name like in the [animals-view.html](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/animals/animals-view.html) Check out the other webcomponents to see variations.
 4. changing the state of a component is possible via the ```state``` constant from inside or by changing the attribute ```data-state``` of the host element.
+
+## Adding a navigation 
+
+Adding a navigation is very easy. You can have an [entire navigation in one single html file](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/home/home-navigation.html) defined as just another component. After having it integrated into your app
+
+![nav integration](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/nav-component.png)
+
+it could look like this:
+
+![Navigation example](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/nav.png)
+
+Of course you are completely free to customize the themes and make them awesome!
 
 ## Feedback
 
