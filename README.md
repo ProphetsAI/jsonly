@@ -1,9 +1,27 @@
 
-# ProphezAI/JSonly
+# JSonly
 
-There is nothing so complicated that it can't be made simple. JSonly is an advanced, yet minimalistic WebComponents framework featuring most of the functionality of popular JavaScript frameworks, but in a fraction of their complexity. It is built on <a title="Vite" href="https://vitejs.dev"><img height="20" alt="Vitejs-logo" src="https://vitejs.dev/logo.svg"></a> and <a title="SQLite" href="https://sqlite.org/wasm"><img height="20" alt="SQLite-logo" src="https://sqlite.org/images/sqlite370_banner.gif"></a>.
+There is nothing so complicated that it can't be made simple. JSonly is an advanced, yet minimalistic WebComponents framework featuring most of the functionality of popular JavaScript frameworks, but in a fraction of their complexity and therefore minimizing the effort of refactoring your code.
 
+JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" alt="Vitejs-logo" src="https://vitejs.dev/logo.svg"></a> and <a title="SQLite" href="https://sqlite.org/wasm"><img height="20" alt="SQLite-logo" src="https://sqlite.org/images/sqlite370_banner.gif"></a>.
+preview
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+## Features
+
+- vanilla JavaScript
+- built for SinglePageApplications (SPA)
+- following W3C standards as recommended by MDN
+- support for SingleFileComponents (SFC) in dedicated .html files
+- support for nesting WebComponents
+- ShadowDOM with support for template, script and style tags
+- support for reactive state changes
+- support for dynamic imports
+- pluggable navigation module using history-driven Component Router
+- support for inter-component event handling using BroadcastChannels
+- SQLite WebAssembly (WASM) for state management
+- support for OriginPrivateFileSystem (OPFS)
+- Vite with basicSsl plugin
 
 ## Installation
 
@@ -28,21 +46,27 @@ and then
 
 You can then access the app via https://localhost:5173 in your browser.
 
-## Features
+## Creating
 
-- vanilla JavaScript
-- built for SinglePageApplications (SPA)
-- following W3C standards as recommended by MDN
-- support for SingleFileComponents (SFC) in dedicated .html files
-- support for nesting WebComponents
-- ShadowDOM with support for template, script and style tags
-- support for reactive state changes
-- support for dynamic imports
-- pluggable navigation module using history-driven Component Router
-- support for inter-component event handling using BroadcastChannels
-- SQLite WebAssembly (WASM) for state management
-- support for OriginPrivateFileSystem (OPFS)
-- Vite with basicSsl plugin
+Have you ever thought about creating standard WebComponents like this?
+
+![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
+
+Here are some guidlines. Use the predefined constants
+- ```shadowDocument``` to access inner-component elements
+- ```state``` to access and ```setState()``` function to modify component-state
+- use dynamic ```await import``` to include your own modules
+
+## Component Lifecycle
+
+This graphic should help you understand how the component lifecycle of JSonly is working.
+
+![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
+
+1. prefetch html components in ![index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
+2. declare your components in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this will happen automatically in the future)
+3. After having created your components you can instantiate them programmatically or by tag-name like in the ![animals-view.html](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/animals/animals-view.html)
+4. changing the state of a component is possible via the ```state``` constant from inside or by changing the attribute ```data-state``` of the host element.
 
 ## Feedback
 

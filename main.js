@@ -1,4 +1,5 @@
-import { webcomponents } from './webcomponents'
+import { webcomponents } from './webcomponents';
+import { log } from './modules/Logger.js';
 
 Object.keys(webcomponents).forEach(function (prefix) {
   webcomponents[prefix].forEach(function ({ componentName, filePath }) {
@@ -16,14 +17,18 @@ Object.keys(webcomponents).forEach(function (prefix) {
             super();
             this.attachShadow({ mode: "open" });
             this.isAttached = false;
+            log("constructed", this)
           }
           attributeChangedCallback() {
+            log("attributeChanged", this);
+            log("isAttached?", this.isAttached);
             if (this.isAttached) {
               this.disconnectedCallback();
               this.connectedCallback();
             }
           }
           connectedCallback() {
+            log("connected", this);
             this.hostDataIDs = [];
             this.dataset.id = Math.random().toString(16).substring(2, 8);
             let hostElement = this;
@@ -34,6 +39,7 @@ Object.keys(webcomponents).forEach(function (prefix) {
             this.#render();
           }
           disconnectedCallback() {
+            log("disconnected", this);
             while (this.shadowRoot.firstChild) {
               this.shadowRoot.removeChild(this.shadowRoot.firstChild);
             }
@@ -66,6 +72,7 @@ Object.keys(webcomponents).forEach(function (prefix) {
 })()`;
             this.shadowRoot.appendChild(scriptElement);
             this.isAttached = true;
+            log("rendered", this);
           }
         });
       });
