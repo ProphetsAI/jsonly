@@ -48,20 +48,22 @@ You can then access the app via https://localhost:5173 in your browser.
 
 ## Creating
 
-Have you ever thought about creating standard WebComponents like this?
+Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files like this? Now it's possible.
 
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
 
-Here are some guidlines. Use the predefined constants
+Here are some further guidelines: Use the pre-defined constants
 - ```shadowDocument``` to access inner-component elements
 - ```state``` to access and ```setState()``` function to modify component-state
 - use dynamic ```await import``` to include your own modules
 
+That's basically everything. Happy coding"
+
 ## Component Lifecycle
 
-This graphic should help you understand how the component lifecycle of JSonly is working.
+In case you want some deeper insights: This graphic should help you understand how the component lifecycle of JSonly is working:
 
-![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
+![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/components-lifecycle.png)
 
 1. prefetch html components in ![index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
 2. declare your components in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this will happen automatically in the future)
@@ -70,4 +72,4 @@ This graphic should help you understand how the component lifecycle of JSonly is
 
 ## Feedback
 
-Please let me know what you think of it and share your improvements with me. If you have any feedback, please reach out to me at robert.meissner@outlook.com
+If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at robert.meissner@outlook.com
