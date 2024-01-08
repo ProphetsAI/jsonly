@@ -1,4 +1,5 @@
 import { webcomponents } from './webcomponents';
+import './modules/SQLite.js'
 
 Object.keys(webcomponents).forEach(function (prefix) {
   webcomponents[prefix].forEach(function ({ componentName, filePath }) {

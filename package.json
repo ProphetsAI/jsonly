@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "@sqlite.org/sqlite-wasm": "^3.44.2-build1",
+    "@vitejs/plugin-basic-ssl": "^1.0.2"
   }
 }
