@@ -1,8 +1,7 @@
-import { log, error } from '../Logger.js';
-import { use } from '../Helper.js';
+import { log, error } from '../Logger.js'
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 
-let db = null;
+let dbInstance = null;
 let sqlite3 = null;
 
 sqlite3InitModule({
@@ -13,18 +12,15 @@ sqlite3InitModule({
   try {
     log('Running SQLite3 version', sqlite3.version.libVersion);
     if ('opfs' in sqlite3) {
-      db = new sqlite3.oo1.OpfsDb('/jsonly.sqlite3');
-      log('OPFS is available, created persisted database at', db.filename);
+      dbInstance = new sqlite3.oo1.OpfsDb('/jsonly.sqlite3');
+      log('OPFS is available, created persisted database at', dbInstance.filename);
     } else {
-      db = new sqlite3.oo1.DB('/jsonly.sqlite3', 'ct');
-      log('OPFS is not available, created transient database', db.filename);
+      throw new Error("OPFS is not available.");
     }
-    // createTables();
   } catch (err) {
     error(err.name, err.message);
   }
 });
-
 
 onmessage = function dispatch({ data }) {
   switch (data.type) {
@@ -36,7 +32,7 @@ onmessage = function dispatch({ data }) {
       }
       break;
     case "download":
-      const byteArray = sqlite3.capi.sqlite3_js_db_export(db);
+      const byteArray = sqlite3.capi.sqlite3_js_db_export(dbInstance);
       const blob = new Blob([byteArray.buffer], { type: "application/x-sqlite3" });
       postMessage(blob);
       break;
@@ -47,21 +43,10 @@ onmessage = function dispatch({ data }) {
       insertAnimal(data.animal);
       break;
     case "exec":
-      console.log("executing", data.sql);
-
-      use(db)
-        .then(db => {
-          console.log("db", db);
-          return db.exec({ sql: data.sql, returnValue: data.returnValue });
-        })
-        .then(result => {
-          console.log("result", result);
-          return result;
-        });
-    // const resultRows = db.exec(["SELECT * FROM animals;"])
-    // console.log("resultRows", resultRows)
-    // return result;
-    // break;
+      console.log("From SQLiteWorker: dbInstance is ", dbInstance)
+      const resultRows = dbInstance.exec({ sql: data.sql, returnValue: data.returnValue });
+      console.log("resultRows", resultRows);
+      return resultRows;
     default:
       log(data)
   }

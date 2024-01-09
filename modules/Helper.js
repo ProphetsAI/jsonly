@@ -14,3 +14,7 @@ export function use(variable) {
     }
   });
 }
+
+export function processNextTick(callback) {
+  setTimeout(callback, 0);
+}
