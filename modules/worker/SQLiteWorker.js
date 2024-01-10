@@ -4,6 +4,19 @@ import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 let dbInstance = null;
 let sqlite3 = null;
 
+function getDB() {
+  return new Promise((resolve) => {
+    const processNextTick = function () {
+      if (dbInstance) {
+        resolve(dbInstance);
+      } else {
+        setTimeout(processNextTick, 0); // Check again
+      }
+    }
+    processNextTick();
+  });
+}
+
 sqlite3InitModule({
   print: log,
   printErr: error,
@@ -22,7 +35,8 @@ sqlite3InitModule({
   }
 });
 
-onmessage = function dispatch({ data }) {
+onmessage = async function dispatch({ data }) {
+  const db = await getDB();
   switch (data.type) {
     case "upload":
       try {
@@ -32,7 +46,7 @@ onmessage = function dispatch({ data }) {
       }
       break;
     case "download":
-      const byteArray = sqlite3.capi.sqlite3_js_db_export(dbInstance);
+      const byteArray = sqlite3.capi.sqlite3_js_db_export(db);
       const blob = new Blob([byteArray.buffer], { type: "application/x-sqlite3" });
       postMessage(blob);
       break;
@@ -43,8 +57,9 @@ onmessage = function dispatch({ data }) {
       insertAnimal(data.animal);
       break;
     case "exec":
-      console.log("From SQLiteWorker: dbInstance is ", dbInstance)
-      const resultRows = dbInstance.exec({ sql: data.sql, returnValue: data.returnValue });
+
+      console.log("From SQLiteWorker: dbInstance is ", db);
+      const resultRows = db.exec({ sql: data.sql, returnValue: data.returnValue });
       console.log("resultRows", resultRows);
       return resultRows;
     default:
