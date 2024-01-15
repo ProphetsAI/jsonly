@@ -10,16 +10,16 @@ JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" al
 ## Features
 
 - vanilla JavaScript
-- built for SinglePageApplications (SPA)
-- following W3C standards as recommended by MDN
-- support for SingleFileComponents (SFC) in dedicated .html files
+- built for SinglePageApplications (SPAs)
+- following W3C standards and MDN-recommended best practices
+- support for SingleFileComponents (SFCs) in dedicated .html files
 - support for nesting WebComponents
 - ShadowDOM with support for template, script and style tags
 - support for reactive state changes
 - support for dynamic imports
 - pluggable navigation module using history-driven Component Router
 - support for inter-component event handling using BroadcastChannels
-- SQLite WebAssembly (WASM) for state management
+- SQLite WebAssembly (WASM) for global state management
 - support for OriginPrivateFileSystem (OPFS)
 - Vite with basicSsl plugin
 

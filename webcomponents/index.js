@@ -1,5 +1,11 @@
 export const webcomponents =
 {
+  "sqlite": [
+    {
+      "componentName": "control",
+      "filePath": "./webcomponents/sqlite/sqlite-control.html"
+    }
+  ],
   "home": [
     {
       "componentName": "navigation",
@@ -8,24 +14,18 @@ export const webcomponents =
     {
       "componentName": "view",
       "filePath": "./webcomponents/home/home-view.html"
-    },
-    {
-      "componentName": "control",
-      "filePath": "./webcomponents/home/home-control.html"
     }
+  ],
+  "quick": [
+    {
+      "componentName": "delete",
+      "filePath": "./webcomponents/quick/quick-delete.html"
+    },
   ],
   "animals": [
     {
-      "componentName": "ul",
-      "filePath": "./webcomponents/animals/animals-ul.html"
-    },
-    {
       "componentName": "li",
       "filePath": "./webcomponents/animals/animals-li.html"
-    },
-    {
-      "componentName": "create",
-      "filePath": "./webcomponents/animals/animals-create.html"
     },
     {
       "componentName": "view",

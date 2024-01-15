@@ -1,27 +1,32 @@
-import { executeQuery } from './SQLite.js'
+import { executeQuery, executeQuerySync } from './SQLiteAPI.js'
 
-export function createTables() {
+executeQuerySync({
+  "text": `
+CREATE TABLE IF NOT EXISTS animals (id INTEGER PRIMARY KEY AUTOINCREMENT, animal VARCHAR(255) UNIQUE, sound VARCHAR(255), icon VARCHAR(255) UNIQUE);
+INSERT INTO animals(animal, sound, icon) VALUES 
+('Alligator','Snap!','🐊'),
+('Lion','Roaar!','🦁'),
+('Cat','Meaow!','🐱');`
+});
+
+export function insertAnimal({ datasetID, animal, sound, icon }) {
   return executeQuery({
-    "text": "CREATE TABLE IF NOT EXISTS animals (id INTEGER PRIMARY KEY AUTOINCREMENT, animal VARCHAR(255) UNIQUE);"
+    datasetID,
+    text: "INSERT INTO animals(animal, sound, icon) VALUES ($1,$2,$3) RETURNING id;",
+    values: [animal, sound, icon],
   });
 }
 
-export function insertAnimal(animal) {
-  return executeQuery({
-    text: "INSERT INTO animals(animal) VALUES ($1);",
-    values: [animal],
-  });
-}
-
-export function getAnimals(id) {
-  if (id) {
-    executeQuery({
+export function getAnimals({ datasetID, id }) {
+  if (id)
+    return executeQuery({
+      datasetID,
       text: "SELECT * FROM animals WHERE id = $1;",
       values: [id]
     });
-  } else {
-    executeQuery({
+  else
+    return executeQuery({
+      datasetID,
       text: "SELECT * FROM animals;",
     });
-  }
 }

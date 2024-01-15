@@ -1,0 +1,67 @@
+<script>
+  const { log, error } = await import('./modules/Logger.js');
+  const { uploadSync, downloadSync } = await import('./modules/SQLiteAPI.js');
+
+  const uploadButton = shadowDocument.querySelector('#uploadButton');
+  uploadButton.addEventListener('click', (e) => {
+    let confirmation = prompt("Pressing OK will overwrite current database! Please write OK.", "");
+    if (confirmation && confirmation.toLowerCase() == "ok") log("OK to overwrite current database..."); else {
+      alert("Canceled.");
+      e.preventDefault();
+    }
+  });
+  uploadButton.addEventListener('change', () => {
+    // TODO accept sqlite3 files only
+    try {
+      const file = uploadButton.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        uploadSync(e.target.result); // e.target.result is an ArrayBuffer with the file's contents
+      });
+      reader.readAsArrayBuffer(file);
+    } catch (e) {
+      error(e);
+    }
+  });
+
+  const downloadButton = shadowDocument.querySelector('#downloadButton');
+  downloadButton.addEventListener('click', (e) => {
+    const downloadChannel = new BroadcastChannel("download_channel");
+    downloadChannel.onmessage = (message) => {
+      log("download_channel received message");
+      if (message.data.error) {
+        switch (message.data.error) {
+          case "SQLITE_NOMEM":
+            alert("Nothing to download. DB empty.")
+            break;
+          default:
+            alert("Unknown Error.");
+        }
+      } else {
+        const a = shadowDocument.querySelector('#downloadLink');
+        if (a) {
+          a.href = window.URL.createObjectURL(message.data);
+          a.download = ("jsonly.sqlite3");
+          a.addEventListener('click', function () {
+            setTimeout(function () {
+              window.URL.revokeObjectURL(a.href);
+              a.remove();
+            }, 500);
+          });
+          a.click();
+        }
+      }
+    };
+    downloadSync();
+  });
+</script>
+
+<template>
+  <span>
+    <label for="uploadButton">Upload DB</label>
+    <input type="file" id="uploadButton">
+  </span>
+  <button id="downloadButton">Download DB</button>
+  <a id="downloadLink" hidden></a>
+</template>

@@ -1,12 +1,46 @@
-<script></script>
+<script>
+  const { getAnimals, insertAnimal } = await import('./modules/Animals.js');
 
-<style></style>
+  getAnimals({ datasetID })
+    .then(animals => {
+      const ul = querySelector("ul");
+      animals.forEach(row => {
+        const animalsLi = document.createElement("animals-li");
+        animalsLi.$$ = row;
+        ul.appendChild(animalsLi);
+      });
+    });
+
+  const animalform = querySelector('#animalform');
+  animalform.addEventListener("submit", (e) => {
+    e.preventDefault(); // prevent default submit action
+    const animal = animalform.querySelector('#animal').value || "Dog";
+    const sound = animalform.querySelector('#sound').value || "Wuff!";
+    const icon = animalform.querySelector('#icon').value || "🐶";
+    insertAnimal({ datasetID, animal, sound, icon })
+      .then(newid => {
+        if (newid > 0) refresh();
+      });
+  })
+</script>
+
+<style>
+  ul {
+    list-style-type: none;
+    white-space: pre-line;
+  }
+</style>
 
 <template>
-  <animals-ul data-state='[
-  {"animal":"Alligator","sound":"Snap!","icon":"🐊"},
-  {"animal":"Lion","sound":"Roaar!","icon":"🦁"},
-  {"animal":"Cat","sound":"Meaow!","icon":"🐱"}
-]'></animals-ul>
-  <animals-create></animals-create>
+  <ul></ul>
+  <h2>Create an animal</h2>
+  <form action="#" id="animalform">
+    <label for="animal">Animal:</label>
+    <input type="text" id="animal" name="animal"><br><br>
+    <label for="sound">Sound:</label>
+    <input type="text" id="sound" name="sound"><br><br>
+    <label for="icon">Icon:</label>
+    <input type="text" id="icon" name="icon"><br><br>
+    <input type="submit" value="CREATE">
+  </form>
 </template>

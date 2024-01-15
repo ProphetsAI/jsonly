@@ -1,21 +1,23 @@
 <script>
-  const { log } = await import('./modules/Logger.js');
+  const animal = { "id": $[0], "animal": $[1], "sound": $[2], "icon": $[3] };
+  const li = querySelector("li");
+  li.before(`${animal.icon}`);
+  // li.addEventListener("click", function () {
+  //   alert(animal.sound);
+  // })
+  const strong = querySelector("strong");
+  strong.innerHTML = `Beware of the ${animal.animal}!`;
 
-  const li = shadowDocument.querySelector("li");
-  li.before(`${state ? state.icon : ''}`);
-  li.addEventListener("click", function (e) {
-    log(state.sound);
-  })
-
-  const strong = shadowDocument.querySelector("strong");
-  strong.innerHTML = `Beware of the ${state ? state.animal : 'animal'}!`;
+  querySelector("quick-delete").$$ = { "id": animal.id };
 </script>
 
 <style>
   li {
     cursor: pointer;
-    display:inline-block;
+    display: inline-block;
+    white-space: nowrap;
   }
+
   strong {
     background-color: firebrick;
     color: white;
@@ -25,6 +27,6 @@
 
 <template>
   <li>
-    <strong></strong>
+    <strong></strong><quick-delete></quick-delete>
   </li>
 </template>
