@@ -1,7 +1,12 @@
 <script>
+  const { deleteAnimal } = await import('./modules/Animals.js');
+
+  const state = getState();
+
   const div = querySelector("div");
   div.addEventListener('click', (e) => {
-    console.log("state", $);
+    deleteAnimal({ datasetID, id:state.id});
+    refresh();
   })
 </script>
 

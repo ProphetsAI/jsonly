@@ -1,14 +1,17 @@
 <script>
-  const animal = { "id": $[0], "animal": $[1], "sound": $[2], "icon": $[3] };
+  const state = getState();
+  const animal = { "id": state[0], "animal": state[1], "sound": state[2], "icon": state[3] };
   const li = querySelector("li");
-  li.before(`${animal.icon}`);
+  li.before(animal.icon);
   // li.addEventListener("click", function () {
   //   alert(animal.sound);
   // })
   const strong = querySelector("strong");
   strong.innerHTML = `Beware of the ${animal.animal}!`;
 
-  querySelector("quick-delete").$$ = { "id": animal.id };
+  const quickDelete = querySelector("quick-delete");
+  quickDelete.state = JSON.stringify({ id: animal.id });
+  li.appendChild(quickDelete);
 </script>
 
 <style>

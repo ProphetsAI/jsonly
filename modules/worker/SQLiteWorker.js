@@ -51,7 +51,7 @@ onmessage = async function dispatch({ data }) {
       }
       break;
     case "exec":
-      log("executing query:", data.sql);
+      log(data.sql);
       const result = db.exec({ sql: data.sql, returnValue: data.returnValue });
       postMessage({ result, type: "application/json", datasetID: data.datasetID });
       break;

@@ -6,7 +6,7 @@
       const ul = querySelector("ul");
       animals.forEach(row => {
         const animalsLi = document.createElement("animals-li");
-        animalsLi.$$ = row;
+        animalsLi.state = JSON.stringify(row);
         ul.appendChild(animalsLi);
       });
     });

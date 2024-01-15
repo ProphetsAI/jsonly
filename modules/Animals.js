@@ -17,11 +17,20 @@ export function insertAnimal({ datasetID, animal, sound, icon }) {
   });
 }
 
+export function deleteAnimal({datasetID, id}) {
+  console.log("deleting ", id)
+  return executeQuery({
+    datasetID,
+    text: "DELETE FROM animals WHERE id=$1;",
+    values: [id],
+  });
+}
+
 export function getAnimals({ datasetID, id }) {
   if (id)
     return executeQuery({
       datasetID,
-      text: "SELECT * FROM animals WHERE id = $1;",
+      text: "SELECT * FROM animals WHERE id=$1;",
       values: [id]
     });
   else
