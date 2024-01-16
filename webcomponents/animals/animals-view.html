@@ -3,7 +3,7 @@
 
   getAnimals({ datasetID })
     .then(animals => {
-      const ul = querySelector("ul");
+      const ul = $("ul");
       animals.forEach(row => {
         const animalsLi = document.createElement("animals-li");
         animalsLi.state = row;
@@ -11,12 +11,12 @@
       });
     });
 
-  const animalform = querySelector('#animalform');
-  animalform.addEventListener("submit", (e) => {
+  const animalform = $('#animalform');
+  animalform.on("submit", (e) => {
     e.preventDefault(); // prevent default submit action
-    const animal = animalform.querySelector('#animal').value || "Dog";
-    const sound = animalform.querySelector('#sound').value || "Wuff!";
-    const icon = animalform.querySelector('#icon').value || "🐶";
+    const animal = animalform.$('#animal').value || "Dog";
+    const sound = animalform.$('#sound').value || "Wuff!";
+    const icon = animalform.$('#icon').value || "🐶";
     insertAnimal({ datasetID, animal, sound, icon })
       .then(newid => {
         if (newid > 0) refresh();

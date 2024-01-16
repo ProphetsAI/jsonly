@@ -18,7 +18,6 @@ export function insertAnimal({ datasetID, animal, sound, icon }) {
 }
 
 export function deleteAnimal({datasetID, id}) {
-  console.log("deleting ", id)
   return executeQuery({
     datasetID,
     text: "DELETE FROM animals WHERE id=$1;",

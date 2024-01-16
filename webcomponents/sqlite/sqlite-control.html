@@ -2,8 +2,8 @@
   const { log, error } = await import('./modules/Logger.js');
   const { uploadSync, downloadSync } = await import('./modules/SQLiteAPI.js');
 
-  const uploadButton = shadowDocument.querySelector('#uploadButton');
-  uploadButton.addEventListener('click', (e) => {
+  const uploadButton = $('#uploadButton');
+  uploadButton.$('click', (e) => {
     let confirmation = prompt("Pressing OK will overwrite current database! Please write OK.", "");
     if (confirmation && confirmation.toLowerCase() == "ok") {
       log("OK to overwrite current database...");
@@ -12,13 +12,13 @@
       e.preventDefault();
     }
   });
-  uploadButton.addEventListener('change', () => {
+  uploadButton.on('change', () => {
     // TODO accept sqlite3 files only
     try {
       const file = uploadButton.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.addEventListener('load', (e) => {
+      reader.on('load', (e) => {
         uploadSync(e.target.result); // e.target.result is an ArrayBuffer with the file's contents
       });
       reader.readAsArrayBuffer(file);
@@ -27,9 +27,8 @@
     }
   });
 
-
-  const downloadButton = shadowDocument.querySelector('#downloadButton');
-  downloadButton.addEventListener('click', (e) => {
+  const downloadButton = $('#downloadButton');
+  downloadButton.on('click', (e) => {
     const downloadChannel = new BroadcastChannel("download_channel");
     downloadChannel.onmessage = (message) => {
       log("download_channel received message");
@@ -42,11 +41,11 @@
             alert("Unknown Error.");
         }
       } else {
-        const a = shadowDocument.querySelector('#downloadLink');
+        const a = $('#downloadLink');
         if (a) {
           a.href = window.URL.createObjectURL(message.data);
           a.download = ("jsonly.sqlite3");
-          a.addEventListener('click', function () {
+          a.on('click', function () {
             setTimeout(function () {
               window.URL.revokeObjectURL(a.href);
               a.remove();

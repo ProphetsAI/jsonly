@@ -1,6 +1,10 @@
 import { webcomponents } from './webcomponents';
 
-HTMLElement.prototype.refresh = function() { this.dataset.date = new Date(); }
+HTMLElement.prototype.on = function (a, b, c) { return this.addEventListener(a, b, c); }
+HTMLElement.prototype.off = function (a, b) { return this.removeEventListener(a, b); }
+HTMLElement.prototype.$ = function (s) { return this.querySelector(s); }
+HTMLElement.prototype.$$ = function (s) { return this.querySelectorAll(s); }
+HTMLElement.prototype.refresh = function () { this.dataset.date = new Date(); }
 
 Object.defineProperty(HTMLElement.prototype, "state", {
   get: function () { return this.dataset.state ? JSON.parse(this.dataset.state) : undefined; },
@@ -58,8 +62,8 @@ Object.keys(webcomponents).forEach(function (prefix) {
   }
   const datasetID = context.at(-1);
   let shadowDocument = getDOM(context);
-  const querySelector = (query) => shadowDocument.querySelector(query);
-  const querySelectorAll = (query) => shadowDocument.querySelectorAll(query);
+  const $ = (query) => shadowDocument.querySelector(query);
+  const $$ = (query) => shadowDocument.querySelectorAll(query);
   function getState() { return shadowDocument.host.state; }
   function setState(newState) { shadowDocument.host.state = newState; };
   function refresh() { getDOM([context[0]]).host.refresh() }

@@ -1,15 +1,12 @@
 <script>
   const state = getState();
   const animal = { "id": state[0], "animal": state[1], "sound": state[2], "icon": state[3] };
-  const li = querySelector("li");
+  const li = $("li");
   li.before(animal.icon);
-  // li.addEventListener("click", function () {
-  //   alert(animal.sound);
-  // })
-  const strong = querySelector("strong");
+  const strong = $("strong");
   strong.innerHTML = `Beware of the ${animal.animal}!`;
 
-  const quickDelete = querySelector("quick-delete");
+  const quickDelete = $("quick-delete");
   quickDelete.state = { id: animal.id };
   li.appendChild(quickDelete);
 </script>

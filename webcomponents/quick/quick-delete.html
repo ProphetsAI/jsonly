@@ -3,8 +3,8 @@
 
   if (getDOM(context)) {
     const state = getState();
-    const div = querySelector("div");
-    div.addEventListener('click', (e) => {
+    const div = $("div");
+    div.on('click', (e) => {
       deleteAnimal({ datasetID, id:state.id}).then( result => refresh());
     });
   }

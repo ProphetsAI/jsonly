@@ -1,9 +1,9 @@
 <script>
-  const nav = querySelector("nav");
-  querySelectorAll("a.navlink").forEach(a => {
-    a.addEventListener("click", event => {
+  const nav = $("nav");
+  $$("a.navlink").forEach(a => {
+    a.on("click", event => {
       event.preventDefault();
-      nav.querySelector(".active").classList.remove("active");
+      nav.$(".active").classList.remove("active");
       event.target.classList.add("active");
       const url = event.target.getAttribute("href");
       go(url);
@@ -47,7 +47,7 @@
     }
   }
   // Check the initial URL
-  querySelectorAll("a.navlink").forEach(a => {
+  $$("a.navlink").forEach(a => {
     a.classList.remove("active");
     if (a.getAttribute("href") == location.pathname) {
       a.classList.add("active");
