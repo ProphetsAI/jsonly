@@ -10,7 +10,7 @@
   strong.innerHTML = `Beware of the ${animal.animal}!`;
 
   const quickDelete = querySelector("quick-delete");
-  quickDelete.state = JSON.stringify({ id: animal.id });
+  quickDelete.state = { id: animal.id };
   li.appendChild(quickDelete);
 </script>
 

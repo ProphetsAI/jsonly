@@ -5,7 +5,9 @@
   const uploadButton = shadowDocument.querySelector('#uploadButton');
   uploadButton.addEventListener('click', (e) => {
     let confirmation = prompt("Pressing OK will overwrite current database! Please write OK.", "");
-    if (confirmation && confirmation.toLowerCase() == "ok") log("OK to overwrite current database..."); else {
+    if (confirmation && confirmation.toLowerCase() == "ok") {
+      log("OK to overwrite current database...");
+    } else {
       alert("Canceled.");
       e.preventDefault();
     }
@@ -24,6 +26,7 @@
       error(e);
     }
   });
+
 
   const downloadButton = shadowDocument.querySelector('#downloadButton');
   downloadButton.addEventListener('click', (e) => {
@@ -60,8 +63,8 @@
 <template>
   <span>
     <label for="uploadButton">Upload DB</label>
-    <input type="file" id="uploadButton">
+    <input type="file" id="uploadButton" />
   </span>
-  <button id="downloadButton">Download DB</button>
+  <button type="button" id="downloadButton">Download DB</button>
   <a id="downloadLink" hidden></a>
 </template>
