@@ -86,4 +86,4 @@ Of course you are completely free to customize the themes and make them awesome!
 
 ## Feedback
 
-If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me
+If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at robert.meissner@outlook.com
