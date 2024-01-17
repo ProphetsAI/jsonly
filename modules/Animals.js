@@ -1,6 +1,6 @@
-import { executeQuery, executeQuerySync } from './SQLiteAPI.js'
+import { SQLiteAPI } from './SQLiteAPI.js'
 
-executeQuerySync({
+SQLiteAPI.executeQuerySync({
   "text": `
 CREATE TABLE IF NOT EXISTS animals (id INTEGER PRIMARY KEY AUTOINCREMENT, animal VARCHAR(255) UNIQUE, sound VARCHAR(255), icon VARCHAR(255) UNIQUE);
 INSERT INTO animals(animal, sound, icon) VALUES 
@@ -10,16 +10,15 @@ INSERT INTO animals(animal, sound, icon) VALUES
 });
 
 export function insertAnimal({ datasetID, animal, sound, icon }) {
-  return executeQuery({
+  return SQLiteAPI.executeQuery({
     datasetID,
     text: "INSERT INTO animals(animal, sound, icon) VALUES ($1,$2,$3) RETURNING id;",
     values: [animal, sound, icon],
   });
 }
 
-export function deleteAnimal({datasetID, id}) {
-  console.log("deleting ", id)
-  return executeQuery({
+export function deleteAnimal({ datasetID, id }) {
+  return SQLiteAPI.executeQuery({
     datasetID,
     text: "DELETE FROM animals WHERE id=$1;",
     values: [id],
@@ -28,13 +27,13 @@ export function deleteAnimal({datasetID, id}) {
 
 export function getAnimals({ datasetID, id }) {
   if (id)
-    return executeQuery({
+    return SQLiteAPI.executeQuery({
       datasetID,
       text: "SELECT * FROM animals WHERE id=$1;",
       values: [id]
     });
   else
-    return executeQuery({
+    return SQLiteAPI.executeQuery({
       datasetID,
       text: "SELECT * FROM animals;",
     });

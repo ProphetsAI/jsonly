@@ -1,26 +1,24 @@
 <script>
   const { getAnimals, insertAnimal } = await import('./modules/Animals.js');
 
-  getAnimals({ datasetID })
-    .then(animals => {
-      const ul = querySelector("ul");
-      animals.forEach(row => {
-        const animalsLi = document.createElement("animals-li");
-        animalsLi.state = JSON.stringify(row);
-        ul.appendChild(animalsLi);
-      });
+  getAnimals({ datasetID }).then(animals => {
+    const ul = $("ul");
+    animals.forEach(row => {
+      const animalsLi = document.createElement("animals-li");
+      animalsLi.state = row;
+      ul.appendChild(animalsLi);
     });
+  });
 
-  const animalform = querySelector('#animalform');
-  animalform.addEventListener("submit", (e) => {
+  const animalform = $('#animalform');
+  animalform.on("submit", (e) => {
     e.preventDefault(); // prevent default submit action
-    const animal = animalform.querySelector('#animal').value || "Dog";
-    const sound = animalform.querySelector('#sound').value || "Wuff!";
-    const icon = animalform.querySelector('#icon').value || "🐶";
-    insertAnimal({ datasetID, animal, sound, icon })
-      .then(newid => {
-        if (newid > 0) refresh();
-      });
+    const animal = animalform.$('#animal').value || "Dog";
+    const sound = animalform.$('#sound').value || "Wuff!";
+    const icon = animalform.$('#icon').value || "🐶";
+    insertAnimal({ datasetID, animal, sound, icon }).then(newid => {
+      if (newid > 0) refresh();
+    });
   })
 </script>
 
