@@ -52,26 +52,21 @@ Have you ever thought about creating standard SingleFile-WebComponents in dedica
 
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
 
-Here are some further guidelines: Use the pre-defined constants
-- ```shadowDocument``` to access inner-component elements
-- ```state``` to access and ```setState()``` function to modify component-state
-- use dynamic ```await import``` to include your own modules
-
 That's basically everything. **Happy coding!**
 
 [Examples](https://github.com/ProphezAI/jsonly/tree/main/webcomponents) can be found in the webcomponents folder. It is recommended to stick to that pattern to keep your code clean, but of course you are free to customize at your own will!
 
-## API description
+## API description and restrictions
 
-In a SFC you have direct access to the following functions:
+Here are some further guidelines. You can use the following pre-defined constants in a SFC. You have access to the following functions:
 
-- ```shadowDocument``` is the private scope DOM of the SFC. You can use it just like the default DOM ```document```, for instance ```shadowDocument.getElementById(...)```.
-- ```$``` is a shorthand for ```querySelector``` You can use it to get a HTMLElement like ```const animalform = $('#animalform');``` and then access unerlying HTMLElements via ```animalform.$('#animal').value```
-- ```$$``` is a shorthand for ```querySelectorAll``` and you can use it accordingly to ```$```.
+- use dynamic ```await import``` to include your own modules
+- ```shadowDocument``` is the private scope DOM of the SFC to access inner-component elements. You can use it just like the default DOM ```document```, for instance ```shadowDocument.getElementById(...)```.
+- ```$``` is a shorthand for ```querySelector``` on the shadowDocument. You can use it to get a HTMLElement like ```const animalform = $('#animalform');``` and then access underlying HTMLElements via ```animalform.$('#animal').value```
+- ```$$``` is a shorthand for ```querySelectorAll``` and you can use it accordingly to ```$```, standalone (on shadowDocument) or on a HTMLElement.
 - ```refresh``` is refreshing the element when called on the HTMLElement and refreshing the uppermost HTMLElement when called standalone.
-- ```getState``` yields the state as a JSON object.
-- ```setState(string)``` takes a string and parses it to JSON.
-
+- Use ```getState``` to get the component state as a JSON object
+- ```setState(string)``` takes a string and modifies the component-state.
 
 ## Component Lifecycle
 
