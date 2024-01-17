@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.1] - 2024-01-17
+
+### Added
+
+- SQLite API
+- Reactivity API
+
+### Fixed
+
+- Page refresh
+- start route
+
 ## [0.7.1] - 2024-01-06
 
 ### Added

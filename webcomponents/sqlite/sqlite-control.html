@@ -31,11 +31,11 @@
   downloadButton.on('click', (e) => {
     const downloadChannel = new BroadcastChannel("download_channel");
     downloadChannel.onmessage = (message) => {
-      log("download_channel received message");
+      log("download_channel active...");
       if (message.data.error) {
         switch (message.data.error) {
           case "SQLITE_NOMEM":
-            alert("Nothing to download. DB empty.")
+            alert("Nothing to download. DB empty.");
             break;
           default:
             alert("Unknown Error.");
@@ -55,6 +55,7 @@
     };
     SQLiteAPI.downloadSync();
   });
+
   const resetButton = $('#resetButton');
   resetButton.on('click', async (e) => {
     let confirmation = prompt("Pressing OK will reset current database! Please write DELETE.", "");

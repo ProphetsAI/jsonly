@@ -61,6 +61,18 @@ That's basically everything. **Happy coding!**
 
 [Examples](https://github.com/ProphezAI/jsonly/tree/main/webcomponents) can be found in the webcomponents folder. It is recommended to stick to that pattern to keep your code clean, but of course you are free to customize at your own will!
 
+## API description
+
+In a SFC you have direct access to the following functions:
+
+- ```shadowDocument``` is the private scope DOM of the SFC. You can use it just like the default DOM ```document```, for instance ```shadowDocument.getElementById(...)```.
+- ```$``` is a shorthand for ```querySelector``` You can use it to get a HTMLElement like ```const animalform = $('#animalform');``` and then access unerlying HTMLElements via ```animalform.$('#animal').value```
+- ```$$``` is a shorthand for ```querySelectorAll``` and you can use it accordingly to ```$```.
+- ```refresh``` is refreshing the element when called on the HTMLElement and refreshing the uppermost HTMLElement when called standalone.
+- ```getState``` yields the state as a JSON object.
+- ```setState(string)``` takes a string and parses it to JSON.
+
+
 ## Component Lifecycle
 
 In case you want some deeper insights: This lifecycle-graph should help you understand how the component in JSonly are working:
@@ -86,4 +98,4 @@ Of course you are completely free to customize the themes and make them awesome!
 
 ## Feedback
 
-If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at robert.meissner@outlook.com
+If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at @prophezai
