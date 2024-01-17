@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 export default defineConfig({
   server: {
@@ -9,5 +10,8 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['@sqlite.org/sqlite-wasm'],
-  }
+  },
+  plugins: [
+    basicSsl()
+  ]
 });

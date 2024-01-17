@@ -20,7 +20,7 @@ JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" al
 - pluggable navigation module using history-driven Component Router
 - support for inter-component event handling using BroadcastChannels
 - SQLite WebAssembly (WASM) for global state management
-- support for OriginPrivateFileSystem (OPFS)
+- support for OriginPrivateFileSystem (OPFS), your data stays private
 - Vite with basicSsl plugin
 
 ## Installation
