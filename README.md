@@ -48,7 +48,7 @@ You can then access the app via https://localhost:5173 in your browser.
 
 ## Creating
 
-Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files like this? Now it's possible.
+Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files? Now it's possible to use ```script```, ```style``` and ```template``` fragments and load them dynamically. Just define your webcomonents in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js)
 
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
 
