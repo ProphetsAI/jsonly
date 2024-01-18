@@ -48,7 +48,7 @@ You can then access the app via https://localhost:5173 in your browser.
 
 ## Creating
 
-Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files? Now it's possible to use ```script```, ```style``` and ```template``` fragments and load them dynamically. Just define your webcomonents in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js)
+Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files? Now it's possible to use ```script```, ```style``` and ```template``` fragments and load them dynamically.
 
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
 
@@ -75,7 +75,7 @@ In case you want some deeper insights: This lifecycle-graph should help you unde
 ![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/components-lifecycle.png)
 
 1. prefetch html components in [index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
-2. declare your components in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this will happen automatically in the future)
+2. declare your webcomponents in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this happens automatically when you run ```npm run dev```)
 3. After having created your components you can instantiate them programmatically or by tag-name like in the [animals-view.html](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/animals/animals-view.html) Check out the other webcomponents to see variations.
 4. changing the state of a component is possible via the ```state``` constant from inside or by changing the attribute ```data-state``` of the host element.
 

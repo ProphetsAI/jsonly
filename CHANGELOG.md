@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.2] - 2024-01-18
+
+### Added
+
+- automatic generation of ./webcomponents/index.js (no manual maintenance needed)
+
 ## [0.8.1] - 2024-01-17
 
 ### Added
