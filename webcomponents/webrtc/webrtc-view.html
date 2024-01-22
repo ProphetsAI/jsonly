@@ -1,0 +1,113 @@
+<script>
+  const { log, error } = await import('./modules/Logger.js');
+  // RTCPeerConnection
+  var rtcConnection = new RTCPeerConnection({ iceServers: [] });
+  rtcConnection.onicecandidate = function rtcIceCandidate(event) {
+    log("Reprinting SDP...");
+    $("#app").value = JSON.stringify(rtcConnection.localDescription)
+  }
+
+  shadowDocument.onbeforeunload = function beforeUnloaded() {
+    log("closing data channel")
+    rtcConnection.dataChannel.close();
+  }
+  function messageReceived(event) {
+    log("Message received:", event.data);
+    //sqliteWorker.postMessage(event.data)
+  };
+  function dataChannelClosed(event) {
+    log("Closing rtcConnection...")
+    rtcConnection.close();
+  }
+
+  function initializeWithOffer() {
+    const dataChannel = rtcConnection.createDataChannel("rtcChannel");
+    dataChannel.onopen = function dataChannelOpened(event) {
+      log("Data channel opened.");
+    }
+    dataChannel.onmessage = messageReceived;
+    dataChannel.onclose = dataChannelClosed;
+    rtcConnection.dataChannel = dataChannel;
+    rtcConnection.createOffer()
+      .then((offer) => rtcConnection.setLocalDescription(offer))
+      .then((e) => log("Offer created."));
+  }
+
+  function initializeWithAnswer() {
+    rtcConnection.ondatachannel = function dataChannelOffered(event) {
+      rtcConnection.dataChannel = event.channel;
+      rtcConnection.dataChannel.onopen = function dataChannelOpened(event) {
+        log("Remote connection opened.");
+      }
+      rtcConnection.dataChannel.onmessage = messageReceived;
+      rtcConnection.dataChannel.onclose = dataChannelClosed;
+    }
+    setSDP();
+  }
+
+  function setSDP() {
+    const sdp = JSON.parse($("#app").value);
+    switch (sdp.type) {
+      case "offer":
+        rtcConnection.setRemoteDescription(sdp)
+          .then((a) => log("Offer set."));
+        rtcConnection.createAnswer()
+          .then((answer) => rtcConnection.setLocalDescription(answer))
+          .then((answer) => log("Answer created."));
+        break;
+      case "answer":
+        rtcConnection.setRemoteDescription(sdp)
+          .then((answer) => log("Anwer set."));
+        break;
+      default:
+        log("Unhandeled message: ", sdp);
+    }
+  }
+
+  function sendToRemote() {
+    log("sending to remote")
+    try {
+      const json = JSON.parse($("#app").value);
+      // TODO: further verification
+      rtcConnection.dataChannel.send(JSON.stringify(json));
+    } catch (e) {
+      error(e)
+    }
+  }
+
+  function sendToLocal() {
+    log("sending to local")
+    try {
+      const json = JSON.parse(document.querySelector("#app").value);
+      // TODO: further verification
+      //       sqliteWorker.postMessage(JSON.stringify(json))
+      log("sending to local:", JSON.stringify(json));
+    } catch (e) {
+      error(e)
+    }
+  }
+
+  $("#initializeWithOffer").onclick = initializeWithOffer;
+  $("#initializeWithAnswer").onclick = initializeWithAnswer;
+  $("#setSDP").onclick = setSDP;
+  $("#sendToRemote").onclick = sendToRemote;
+  // $("#sendToLocal").onclick = sendToLocal;
+</script>
+
+<style></style>
+
+<template>
+  <p>Please open this view in two tabs (A/B), and keep it open:</p>
+  <ol>
+    <li>Step 1 on A: Click "Create offer" and copy offer to clipboard.</li>
+    <li>Step 2 on B: Paste offer and click "Create answer". Copy answer to clipboard.</li>
+    <li>Steb 3 on A: Click "Set remote". The connection should now be established.</li>
+    <li>You can now Send messages to remote. Please make sure, they are valid JSON.</li>
+  </ol>
+  <textarea id="app"></textarea>
+  <button id="initializeWithOffer">Step 1 on A: Create offer</button>
+  <button id="initializeWithAnswer">Step 2 on B: Create answer</button>
+  <button id="setSDP">Step 3 on A: Set remote</button>
+  <button id="sendToRemote">Send to Remote</button>
+  <!-- <button id="sendToLocal">Send to Local</button> -->
+</template>
