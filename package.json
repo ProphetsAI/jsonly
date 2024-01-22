@@ -10,10 +10,10 @@
     "preview": "npm run gen && vite preview"
   },
   "devDependencies": {
-    "vite": "^5.0.8"
+    "vite": "^5.0.12"
   },
   "dependencies": {
-    "@sqlite.org/sqlite-wasm": "^3.44.2-build1",
-    "@vitejs/plugin-basic-ssl": "^1.0.2"
+    "@sqlite.org/sqlite-wasm": "3.44.2-build3",
+    "@vitejs/plugin-basic-ssl": "^1.1.0"
   }
 }
