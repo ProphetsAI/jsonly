@@ -19,7 +19,7 @@
     insertAnimal({ datasetID, animal, sound, icon }).then(newid => {
       if (newid > 0) refresh();
     });
-  })
+  });
 </script>
 
 <style>
@@ -34,11 +34,11 @@
   <h2>Create an animal</h2>
   <form action="#" id="animalform">
     <label for="animal">Animal:</label>
-    <input type="text" id="animal" name="animal"><br><br>
+    <input type="text" id="animal" name="animal" /><br /><br />
     <label for="sound">Sound:</label>
-    <input type="text" id="sound" name="sound"><br><br>
+    <input type="text" id="sound" name="sound" /><br /><br />
     <label for="icon">Icon:</label>
-    <input type="text" id="icon" name="icon"><br><br>
-    <input type="submit" value="CREATE">
+    <input type="text" id="icon" name="icon" /><br /><br />
+    <input type="submit" value="CREATE" />
   </form>
 </template>

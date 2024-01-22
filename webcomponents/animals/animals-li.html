@@ -1,10 +1,15 @@
 <script>
+  const { log } = await import('./modules/Logger.js');
+
   const state = getState();
   const animal = { "id": state[0], "animal": state[1], "sound": state[2], "icon": state[3] };
   const li = $("li");
   li.before(animal.icon);
   const strong = $("strong");
   strong.innerHTML = `Beware of the ${animal.animal}!`;
+  strong.on("click", function() {
+    log(animal.sound);
+  });
 
   const quickDelete = $("quick-delete");
   quickDelete.state = { id: animal.id };
