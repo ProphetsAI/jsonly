@@ -1,78 +1,11 @@
 <script>
   const { log, error } = await import('./modules/Logger.js');
+  const { WebRTCAPI } = await import('./services/WebRTCAPI.js');
   // RTCPeerConnection
-  var rtcConnection = new RTCPeerConnection({ iceServers: [] });
-  rtcConnection.onicecandidate = function rtcIceCandidate(event) {
-    log("Reprinting SDP...");
-    $("#app").value = JSON.stringify(rtcConnection.localDescription)
-  }
 
   shadowDocument.onbeforeunload = function beforeUnloaded() {
     log("closing data channel")
     rtcConnection.dataChannel.close();
-  }
-  function messageReceived(event) {
-    log("Message received:", event.data);
-    //sqliteWorker.postMessage(event.data)
-  };
-  function dataChannelClosed(event) {
-    log("Closing rtcConnection...")
-    rtcConnection.close();
-  }
-
-  function initializeWithOffer() {
-    const dataChannel = rtcConnection.createDataChannel("rtcChannel");
-    dataChannel.onopen = function dataChannelOpened(event) {
-      log("Data channel opened.");
-    }
-    dataChannel.onmessage = messageReceived;
-    dataChannel.onclose = dataChannelClosed;
-    rtcConnection.dataChannel = dataChannel;
-    rtcConnection.createOffer()
-      .then((offer) => rtcConnection.setLocalDescription(offer))
-      .then((e) => log("Offer created."));
-  }
-
-  function initializeWithAnswer() {
-    rtcConnection.ondatachannel = function dataChannelOffered(event) {
-      rtcConnection.dataChannel = event.channel;
-      rtcConnection.dataChannel.onopen = function dataChannelOpened(event) {
-        log("Remote connection opened.");
-      }
-      rtcConnection.dataChannel.onmessage = messageReceived;
-      rtcConnection.dataChannel.onclose = dataChannelClosed;
-    }
-    setSDP();
-  }
-
-  function setSDP() {
-    const sdp = JSON.parse($("#app").value);
-    switch (sdp.type) {
-      case "offer":
-        rtcConnection.setRemoteDescription(sdp)
-          .then((a) => log("Offer set."));
-        rtcConnection.createAnswer()
-          .then((answer) => rtcConnection.setLocalDescription(answer))
-          .then((answer) => log("Answer created."));
-        break;
-      case "answer":
-        rtcConnection.setRemoteDescription(sdp)
-          .then((answer) => log("Anwer set."));
-        break;
-      default:
-        log("Unhandeled message: ", sdp);
-    }
-  }
-
-  function sendToRemote() {
-    log("sending to remote")
-    try {
-      const json = JSON.parse($("#app").value);
-      // TODO: further verification
-      rtcConnection.dataChannel.send(JSON.stringify(json));
-    } catch (e) {
-      error(e)
-    }
   }
 
   function sendToLocal() {
@@ -87,10 +20,21 @@
     }
   }
 
-  $("#initializeWithOffer").onclick = initializeWithOffer;
-  $("#initializeWithAnswer").onclick = initializeWithAnswer;
-  $("#setSDP").onclick = setSDP;
-  $("#sendToRemote").onclick = sendToRemote;
+  $("#initializeWithOffer").onclick = () => {
+    WebRTCAPI.initializeWithOffer();
+  }
+  $("#initializeWithAnswer").onclick = () => {
+    const text = JSON.parse($("#app").value);
+    WebRTCAPI.initializeWithAnswer(text);
+  }
+  $("#setSDP").onclick = () => {
+    const text = JSON.parse($("#app").value);
+    WebRTCAPI.setSDP(text);
+  }
+  $("#sendToRemote").onclick = () => {
+    const text = JSON.parse($("#app").value);
+    WebRTCAPI.sendToRemote(text);
+  }
   // $("#sendToLocal").onclick = sendToLocal;
 </script>
 

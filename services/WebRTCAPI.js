@@ -1,71 +1,106 @@
-import { log, error } from './Logger';
+import { log, error } from '../modules/Logger';
 
 var WebRTCAPI = (function () {
-  var worker = null;
+  var rtcConnection = null;
 
   function init() {
-    var initWorker = new Worker("./modules/worker/WebRTCWorker.js", { type: 'module' });
-    if (initWorker) {
-      initWorker.onmessage = function (event) {
-        const data = event.data;
-        switch (data.type) {
-          case "application/json":
-            break;
-          default:
-            log("response from worker:", data);
-        }
-      }
-      return initWorker;
+    log('initializing RTCPeerConnection...');
+    var rtcConnection = new RTCPeerConnection({ iceServers: [] });
+    rtcConnection.onicecandidate = function rtcIceCandidate(event) {
+      log(JSON.stringify(rtcConnection.localDescription));
     }
-    return null;
+    return rtcConnection;
   }
 
   function getInstance() {
-    if (window.Worker) {
-      if (!worker) {
-        worker = init();
+    if (!rtcConnection) {
+      rtcConnection = init();
+    }
+    return rtcConnection;
+  }
+
+  function messageReceived(event) {
+    log("Message received:", event.data);
+    //sqliteWorker.postMessage(event.data)
+  };
+
+  function dataChannelClosed(event) {
+    log("Closing rtcConnection...")
+    rtcConnection.close();
+  }
+
+  function initializeWithOffer() {
+    const instance = getInstance();
+    const dataChannel = instance.createDataChannel("rtcChannel");
+    dataChannel.onopen = function dataChannelOpened(event) {
+      log("Data channel opened.");
+    }
+    dataChannel.onmessage = messageReceived;
+    dataChannel.onclose = dataChannelClosed;
+    instance.dataChannel = dataChannel;
+    instance.createOffer()
+      .then((offer) => instance.setLocalDescription(offer))
+      .then((e) => log("Offer created."));
+  }
+
+  function initializeWithAnswer(sdp) {
+    const instance = getInstance();
+    instance.ondatachannel = function dataChannelOffered(event) {
+      instance.dataChannel = event.channel;
+      instance.dataChannel.onopen = function dataChannelOpened(event) {
+        log("Remote connection opened.");
       }
-      return worker;
-    } else {
-      error('Your browser doesn\'t support web workers.');
+      instance.dataChannel.onmessage = messageReceived;
+      instance.dataChannel.onclose = dataChannelClosed;
+    }
+    console.log("initializin answer...", sdp)
+    setSDP(sdp);
+  }
+
+  function setSDP(sdp) {
+    const instance = getInstance();
+    // const sdp = JSON.parse($("#app").value);
+    switch (sdp.type) {
+      case "offer":
+        instance.setRemoteDescription(sdp)
+          .then((a) => log("Offer set."));
+        instance.createAnswer()
+          .then((answer) => instance.setLocalDescription(answer))
+          .then((answer) => log("Answer created."));
+        break;
+      case "answer":
+        instance.setRemoteDescription(sdp)
+          .then((answer) => log("Anwer set."));
+        break;
+      default:
+        log("Unhandeled message: ", sdp);
     }
   }
-  async function executeQuery({ datasetID, text, values }) {
-    if (datasetID) {
-      var queryString = text;
-      if (values && queryString.indexOf("$") != -1) values.forEach(function replacePlaceholder(item, index) { queryString = queryString.replace("$" + (index + 1), `'${item}'`); });
-      getInstance().postMessage({ datasetID, type: "exec", sql: queryString, returnValue: "resultRows" });
-      return new Promise((resolve) => {
-        const checkAgain = function () {
-          if (returnValues[datasetID]) {
-            const returnValue = structuredClone(returnValues[datasetID]);
-            delete returnValues[datasetID];
-            resolve(returnValue);
-          } else
-            setTimeout(checkAgain, 0);
-        }
-        checkAgain();
-      });
+
+  function sendToRemote(json) {
+    const instance = getInstance();
+    log("sending to remote")
+    try {
+      // const json = JSON.parse($("#app").value);
+      // TODO: further verification
+      instance.dataChannel.send(JSON.stringify(json));
+    } catch (e) {
+      error(e)
     }
   }
-  function executeQuerySync({ text, values }) {
-    var queryString = text;
-    if (values && queryString.indexOf("$") === -1) values.forEach(function replacePlaceholder(item, index) { queryString = queryString.replace("$" + (index + 1), `'${item}'`); });
-    getInstance().postMessage({ type: "exec", sql: queryString, returnValue: "resultRows" });
-  }
-  function uploadSync(arrayBuffer) {
-    getInstance().postMessage({ "type": "upload", "buffer": arrayBuffer });
-  }
-  function downloadSync() {
-    getInstance().postMessage({ "type": "download" });
+
+  function close() {
+    const instance = getInstance();
+    instance.dataChannel.close();
   }
 
   return {
-    executeQuery,
-    executeQuerySync,
-    uploadSync,
-    downloadSync
+    initializeWithOffer,
+    initializeWithAnswer,
+    setSDP,
+    sendToRemote,
+    close
   };
 })();
 
-export { SQLiteAPI };
+export { WebRTCAPI };

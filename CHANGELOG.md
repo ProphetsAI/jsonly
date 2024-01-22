@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - cross-platform generation of webcomponents/index.js
+- support for realtime P2P connections
 
 ## [0.8.2] - 2024-01-18
 
