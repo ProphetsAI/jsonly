@@ -3,11 +3,6 @@
   const { WebRTCAPI } = await import('./services/WebRTCAPI.js');
   // RTCPeerConnection
 
-  shadowDocument.onbeforeunload = function beforeUnloaded() {
-    log("closing data channel")
-    rtcConnection.dataChannel.close();
-  }
-
   function sendToLocal() {
     log("sending to local")
     try {
