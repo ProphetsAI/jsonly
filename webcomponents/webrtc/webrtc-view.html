@@ -1,7 +1,6 @@
 <script>
   const { log, error } = await import('./modules/Logger.js');
-  const { WebRTCAPI } = await import('./services/WebRTCAPI.js');
-  // RTCPeerConnection
+  const { WebRTC } = await import('./services/WebRTC.js');
 
   function sendToLocal() {
     log("sending to local")
@@ -16,19 +15,19 @@
   }
 
   $("#initializeWithOffer").onclick = () => {
-    WebRTCAPI.initializeWithOffer();
+    WebRTC.initializeWithOffer();
   }
   $("#initializeWithAnswer").onclick = () => {
     const text = JSON.parse($("#app").value);
-    WebRTCAPI.initializeWithAnswer(text);
+    WebRTC.initializeWithAnswer(text);
   }
   $("#setSDP").onclick = () => {
     const text = JSON.parse($("#app").value);
-    WebRTCAPI.setSDP(text);
+    WebRTC.setSDP(text);
   }
   $("#sendToRemote").onclick = () => {
     const text = JSON.parse($("#app").value);
-    WebRTCAPI.sendToRemote(text);
+    WebRTC.sendToRemote(text);
   }
   // $("#sendToLocal").onclick = sendToLocal;
 </script>

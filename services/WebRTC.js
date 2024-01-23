@@ -1,6 +1,6 @@
 import { log, error } from '../modules/Logger';
 
-var WebRTCAPI = (function () {
+var WebRTC = (function () {
   var rtcConnection = null;
 
   function init() {
@@ -103,4 +103,4 @@ var WebRTCAPI = (function () {
   };
 })();
 
-export { WebRTCAPI };
+export { WebRTC };

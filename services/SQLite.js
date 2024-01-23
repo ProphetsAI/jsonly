@@ -1,11 +1,11 @@
-import { log, error } from './Logger';
+import { log, error } from '../modules/Logger';
 
-var SQLiteAPI = (function () {
+var SQLite = (function () {
   var worker = null;
   let returnValues = {};
 
   function init() {
-    var initWorker = new Worker("./modules/worker/SQLiteWorker.js", { type: 'module' });
+    var initWorker = new Worker("./services/worker/SQLiteWorker.js", { type: 'module' });
     if (initWorker) {
       initWorker.onmessage = function (event) {
         const data = event.data;
@@ -77,4 +77,4 @@ var SQLiteAPI = (function () {
   };
 })();
 
-export { SQLiteAPI };
+export { SQLite };

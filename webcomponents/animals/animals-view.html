@@ -1,5 +1,5 @@
 <script>
-  const { getAnimals, insertAnimal } = await import('./modules/Animals.js');
+  const { getAnimals, insertAnimal } = await import('./apis/Animals.js');
 
   getAnimals({ datasetID }).then(animals => {
     const ul = $("ul");

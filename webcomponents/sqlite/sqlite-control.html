@@ -1,6 +1,6 @@
 <script>
   const { log, error } = await import('./modules/Logger.js');
-  const { SQLiteAPI } = await import('./modules/SQLiteAPI.js');
+  const { SQLite } = await import('./services/SQLite.js');
 
   const uploadButton = $('#uploadButton');
   uploadButton.$('click', (e) => {
@@ -19,7 +19,7 @@
       if (!file) return;
       const reader = new FileReader();
       reader.on('load', (e) => {
-        SQLiteAPI.uploadSync(e.target.result); // e.target.result is an ArrayBuffer with the file's contents
+        SQLite.uploadSync(e.target.result); // e.target.result is an ArrayBuffer with the file's contents
       });
       reader.readAsArrayBuffer(file);
     } catch (e) {
@@ -53,7 +53,7 @@
         a.click();
       }
     };
-    SQLiteAPI.downloadSync();
+    SQLite.downloadSync();
   });
 
   const resetButton = $('#resetButton');
@@ -62,8 +62,8 @@
     if (confirmation && confirmation.toLowerCase() == "delete") {
       log("Deleting current database...");
       var root = await navigator.storage.getDirectory();
-      let onlyjs = await root.getFileHandle("jsonly.sqlite3");
-      await onlyjs.remove();
+      let db = await root.getFileHandle("jsonly.sqlite3");
+      await db.remove();
     } else {
       alert("Canceled.");
       e.preventDefault();

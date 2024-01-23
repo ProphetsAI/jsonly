@@ -1,5 +1,5 @@
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
-import { log, error } from '../Logger.js'
+import { log, error } from '../../modules/Logger.js'
 
 let dbInstance = null;
 let sqlite3 = null;
