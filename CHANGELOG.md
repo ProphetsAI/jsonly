@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.4] - 2024-01-24
+
+### Added
+
+- templates have now access to functions returned in the script via this.script publicAPI
+
 ## [0.8.3] - 2024-01-22
 
 ### Added
