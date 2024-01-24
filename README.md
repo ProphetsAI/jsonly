@@ -17,6 +17,7 @@ JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" al
 - ShadowDOM with support for template, script and style tags
 - support for reactive state changes
 - support for dynamic imports
+- offline capabilities
 - pluggable navigation module using history-driven Component Router
 - support for inter-component event handling using BroadcastChannels
 - SQLite WebAssembly (WASM) for global state management
@@ -67,7 +68,8 @@ Here are some further guidelines. You can use the following pre-defined constant
 - ```$$``` is a shorthand for ```querySelectorAll``` and you can use it accordingly to ```$```, standalone (on shadowDocument) or on a HTMLElement.
 - ```refresh``` is refreshing the element when called on the HTMLElement and refreshing the uppermost HTMLElement when called standalone.
 - Use ```getState``` to get the component state as a JSON object
-- ```setState(string)``` takes a string and modifies the component-state.
+- ```setState(string)``` takes a string and modifies the component-state
+- You have access to ````this.script``` in the template. You can access all functions that are returned in an object like ```return {functionA, functionB}```
 
 ## Component Lifecycle
 
