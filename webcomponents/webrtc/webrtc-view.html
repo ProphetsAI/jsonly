@@ -2,34 +2,28 @@
   const { log, error } = await import('./modules/Logger.js');
   const { WebRTC } = await import('./services/WebRTC.js');
 
-  function sendToLocal() {
-    log("sending to local")
-    try {
-      const json = JSON.parse(document.querySelector("#app").value);
-      // TODO: further verification
-      //       sqliteWorker.postMessage(JSON.stringify(json))
-      log("sending to local:", JSON.stringify(json));
-    } catch (e) {
-      error(e)
-    }
-  }
-
-  $("#initializeWithOffer").onclick = () => {
+  function initializeWithOffer() {
     WebRTC.initializeWithOffer();
   }
-  $("#initializeWithAnswer").onclick = () => {
+  function initializeWithAnswer() {
     const text = JSON.parse($("#app").value);
     WebRTC.initializeWithAnswer(text);
   }
-  $("#setSDP").onclick = () => {
+  function setSDP() {
     const text = JSON.parse($("#app").value);
     WebRTC.setSDP(text);
   }
-  $("#sendToRemote").onclick = () => {
+  function sendToRemote() {
     const text = JSON.parse($("#app").value);
     WebRTC.sendToRemote(text);
   }
-  // $("#sendToLocal").onclick = sendToLocal;
+
+  return {
+    initializeWithOffer,
+    initializeWithAnswer,
+    setSDP,
+    sendToRemote
+  };
 </script>
 
 <style></style>
@@ -43,9 +37,8 @@
     <li>You can now Send messages to remote. Please make sure, they are valid JSON.</li>
   </ol>
   <textarea id="app"></textarea>
-  <button id="initializeWithOffer">Step 1 on A: Create offer</button>
-  <button id="initializeWithAnswer">Step 2 on B: Create answer</button>
-  <button id="setSDP">Step 3 on A: Set remote</button>
-  <button id="sendToRemote">Send to Remote</button>
-  <!-- <button id="sendToLocal">Send to Local</button> -->
+  <button id="initializeWithOffer" onclick="this.script.initializeWithOffer()">Step 1 on A: Create offer</button>
+  <button id="initializeWithAnswer" onclick="this.script.initializeWithAnswer()">Step 2 on B: Create answer</button>
+  <button id="setSDP" onclick="this.script.setSDP()">Step 3 on A: Set remote</button>
+  <button id="sendToRemote" onclick="this.script.sendToRemote()">Send to Remote</button>
 </template>

@@ -5,10 +5,24 @@ HTMLElement.prototype.off = function (a, b) { return this.removeEventListener(a,
 HTMLElement.prototype.$ = function (s) { return this.querySelector(s); }
 HTMLElement.prototype.$$ = function (s) { return this.querySelectorAll(s); }
 HTMLElement.prototype.refresh = function () { this.dataset.date = new Date(); }
-
+HTMLElement.prototype.getDOM = function (hostDataIDs = this.hostDataIDs) {
+  if (hostDataIDs) {
+    let shadowDOM = document;
+    for (let hostDataID of hostDataIDs) {
+      const host = shadowDOM.querySelector('[data-id="' + hostDataID + '"]')
+      if (host) { shadowDOM = host.shadowRoot; } else { return null; }
+    }
+    return shadowDOM;
+  } else {
+    return this.getRootNode();
+  }
+}
 Object.defineProperty(HTMLElement.prototype, "state", {
   get: function () { return this.dataset.state ? JSON.parse(this.dataset.state) : undefined; },
-  set: function (newState) { this.dataset.state = JSON.stringify(newState); },
+  set: function (newState) { this.dataset.state = JSON.stringify(newState); }
+});
+Object.defineProperty(HTMLElement.prototype, 'script', {
+  get: function() { return this.getDOM().publicAPI; }
 });
 
 Object.keys(webcomponents).forEach(function (prefix) {
@@ -43,32 +57,38 @@ Object.keys(webcomponents).forEach(function (prefix) {
         }
         disconnectedCallback() { while (this.shadowRoot.firstChild) this.shadowRoot.removeChild(this.shadowRoot.firstChild); }
         #render() {
-          if (templateFragment) this.shadowRoot.appendChild(templateFragment.content.cloneNode(true));
+          if (templateFragment) {
+            var clonedTemplate = templateFragment.content.cloneNode(true);
+            this.shadowRoot.appendChild(clonedTemplate);
+          }
           if (styleFragment) this.shadowRoot.appendChild(styleFragment.cloneNode(true));
           const scriptElement = document.createElement("script");
           scriptElement.setAttribute("type", "module");
           // The IIFE creates a private scope for variables and functions in WebComponents
           scriptElement.textContent = `
 (async function(context = '${this.hostDataIDs.reverse().toString()}'.split(',')) {
-  function getDOM(hostDataIDs) {
-    let shadowDOM = document;
-    for (let hostDataID of hostDataIDs) {
-      const host = shadowDOM.querySelector('[data-id="' + hostDataID + '"]')
-      if (host) { shadowDOM = host.shadowRoot; } else { return null; }
-    }
-    return shadowDOM;
+function getDOM(hostDataIDs) {
+  let shadowDOM = document;
+  for (let hostDataID of hostDataIDs) {
+    const host = shadowDOM.querySelector('[data-id="' + hostDataID + '"]')
+    if (host) { shadowDOM = host.shadowRoot; } else { return null; }
   }
-  const datasetID = context.at(-1);
-  let shadowDocument = getDOM(context);
-  const $ = (query) => shadowDocument.querySelector(query);
-  const $$ = (query) => shadowDocument.querySelectorAll(query);
-  function getState() { return shadowDocument.host.state; }
-  function setState(newState) { shadowDocument.host.state = newState; };
-  function refresh() { getDOM([context[0]]).host.refresh() }
-  ${scriptFragment ? scriptFragment.textContent : ''}
-})()`;
-          this.shadowRoot.appendChild(scriptElement);
-          this.isAttached = true;
+  return shadowDOM;
+}
+const datasetID = context.at(-1);
+let shadowDocument = getDOM(context);
+const $ = (query) => shadowDocument.querySelector(query);
+const $$ = (query) => shadowDocument.querySelectorAll(query);
+function getState() { return shadowDocument.host.state; }
+function setState(newState) { shadowDocument.host.state = newState; };
+function refresh() { getDOM([context[0]]).host.refresh() }
+${scriptFragment ? scriptFragment.textContent : ''}
+return {};
+})();`;
+        const scriptsReturnValue = eval (scriptElement.textContent);
+        scriptsReturnValue.then(publicAPI => this.shadowRoot.publicAPI = publicAPI);
+        // this.shadowRoot.appendChild(scriptElement);
+        this.isAttached = true;
         }
       });
     });
