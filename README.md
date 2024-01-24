@@ -33,10 +33,10 @@ Besides <a title="git" href="https://git-scm.com"><img height="20" alt="GIT-logo
 
 ### Running 
 
-Running JSONly is as easy as cloning a repository.
+Running JSonly is as easy as cloning a repository.
 
 ```bash
-  git clone https://github.com/ProphezAI/jsonly
+  git clone https://github.com/ProphetsAI/jsonly
   cd jsonly
   npm install
 ```
@@ -52,11 +52,11 @@ You can then access the app via https://localhost:5173 in your browser.
 
 Have you ever thought about creating standard SingleFile-WebComponents in dedicated HTML-files? Now it's possible to use ```script```, ```style``` and ```template``` fragments and load them dynamically.
 
-![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/SFC.png)
+![Preview](https://raw.githubusercontent.com/ProphetsAI/jsonly/main/docs/SFC.png)
 
 That's basically everything. **Happy coding!**
 
-[Examples](https://github.com/ProphezAI/jsonly/tree/main/webcomponents) can be found in the webcomponents folder. It is recommended to stick to that pattern to keep your code clean, but of course you are free to customize at your own will!
+[Examples](https://github.com/ProphetsAI/jsonly/tree/main/webcomponents) can be found in the webcomponents folder. It is recommended to stick to that pattern to keep your code clean, but of course you are free to customize at your own will!
 
 ## API description and restrictions
 
@@ -75,25 +75,25 @@ Here are some further guidelines. You can use the following pre-defined constant
 
 In case you want some deeper insights: This lifecycle-graph should help you understand how the component in JSonly are working:
 
-![Preview](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/components-lifecycle.png)
+![Preview](https://raw.githubusercontent.com/ProphetsAI/jsonly/main/docs/components-lifecycle.png)
 
-1. prefetch html components in [index.html](https://github.com/ProphezAI/jsonly/blob/main/index.html)
-2. declare your webcomponents in the [./webcomponents/index.js](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/index.js) (this happens automatically when you run ```npm run dev```)
-3. After having created your components you can instantiate them programmatically or by tag-name like in the [animals-view.html](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/animals/animals-view.html) Check out the other webcomponents to see variations.
+1. prefetch html components in [index.html](https://github.com/ProphetsAI/jsonly/blob/main/index.html)
+2. declare your webcomponents in the [./webcomponents/index.js](https://github.com/ProphetsAI/jsonly/blob/main/webcomponents/index.js) (this happens automatically when you run ```npm run dev```)
+3. After having created your components you can instantiate them programmatically or by tag-name like in the [animals-view.html](https://github.com/ProphetsAI/jsonly/blob/main/webcomponents/animals/animals-view.html) Check out the other webcomponents to see variations.
 4. changing the state of a component is possible via the ```state``` constant from inside or by changing the attribute ```data-state``` of the host element.
 
 ## Adding a navigation 
 
-Adding a navigation is very easy. You can have an [entire navigation in one single html file](https://github.com/ProphezAI/jsonly/blob/main/webcomponents/home/home-navigation.html) defined as just another component. After having it integrated into your app
+Adding a navigation is very easy. You can have an [entire navigation in one single html file](https://github.com/ProphetsAI/jsonly/blob/main/webcomponents/home/home-navigation.html) defined as just another component. After having it integrated into your app
 
-![nav integration](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/nav-component.png)
+![nav integration](https://raw.githubusercontent.com/ProphetsAI/jsonly/main/docs/nav-component.png)
 
 it could look like this:
 
-![Navigation example](https://raw.githubusercontent.com/ProphezAI/jsonly/main/docs/nav.png)
+![Navigation example](https://raw.githubusercontent.com/ProphetsAI/jsonly/main/docs/nav.png)
 
 Of course you are completely free to customize the themes and make them awesome!
 
 ## Feedback
 
-If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at @prophezai
+If you still have questions please let me know. Also what you think and share your improvements with me is higly appreciated. If you have any feedback, please reach out to me at @prophets_ai
