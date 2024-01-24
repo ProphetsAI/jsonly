@@ -25,6 +25,7 @@ JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" al
 - support for OriginPrivateFileSystem (OPFS), your data stays private
 - support for realtime P2P connections via WebRTC
 - Vite with basicSsl plugin
+- basic functionality in under <100LOC
 
 ## Installation
 
