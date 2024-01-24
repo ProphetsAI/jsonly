@@ -5,7 +5,7 @@
     const state = getState();
     const div = $("div");
     div.on('click', (e) => {
-      deleteAnimal({ datasetID, id: state.id }).then(result => { console.log(result); refresh() });
+      deleteAnimal({ datasetID, id: state.id }).then(result => refresh());
     });
   }
 </script>

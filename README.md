@@ -11,8 +11,9 @@ JSonly is built on <a title="Vite" href="https://vitejs.dev"><img height="20" al
 
 - vanilla JavaScript
 - built for SinglePageApplications (SPAs)
-- following W3C standards and MDN-recommended best practices
+- following W3C standards and MDN-recommended best practices with just a few hacks to accomplish things where people claim: *"This is impossible with WebComponents"*
 - support for SingleFileComponents (SFCs) in dedicated .html files
+- support for use of script-returned functions in the templates (script-API)
 - support for nesting WebComponents
 - ShadowDOM with support for template, script and style tags
 - support for reactive state changes

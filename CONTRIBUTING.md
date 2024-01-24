@@ -1,1 +1,1 @@
-You can clone the repo and follow @ProphezAI if you want to contribute.
+You can clone the repo and follow @prophetsai if you want to contribute.
