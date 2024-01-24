@@ -71,8 +71,8 @@ Here are some further guidelines. You can use the following pre-defined constant
 - ```refresh``` is refreshing the element when called on the HTMLElement and refreshing the uppermost HTMLElement when called standalone.
 - Use ```getState``` to get the component state as a JSON object
 - ```setState(string)``` takes a string and modifies the component-state
-- You have access to ````this.script``` in the template. You can access all functions that are returned in an object like ```return {functionA, functionB}```
-- You will have to check ```if (getDOM(context)) {``` on WebComponents that are going to be deleted to prevent further script exection of detached elements.
+- You have access to ````this.script``` in the template. You have access to all functions that are returned by the script-API with ```return {functionA, functionB}```
+- You will have to check ```if (getDOM(context)) {``` on WebComponents that are going to be deleted to prevent script execution of detached elements.
 
 ## Component Lifecycle
 
