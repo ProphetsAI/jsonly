@@ -16,9 +16,10 @@
     const animal = animalform.$('#animal').value || "Dog";
     const sound = animalform.$('#sound').value || "Wuff!";
     const icon = animalform.$('#icon').value || "🐶";
-    insertAnimal({ datasetID, animal, sound, icon }).then(newid => {
-      if (newid > 0) refresh();
-    });
+    insertAnimal({ datasetID, animal, sound, icon })
+      .then(newid => {
+        if (newid > 0) refresh();
+      });
   });
 </script>
 
@@ -27,18 +28,32 @@
     list-style-type: none;
     white-space: pre-line;
   }
+
+  form {
+    display: flex;
+  }
+
+  form span {
+    display: block;
+  }
 </style>
 
 <template>
-  <ul></ul>
   <h2>Create an animal</h2>
   <form action="#" id="animalform">
-    <label for="animal">Animal:</label>
-    <input type="text" id="animal" name="animal" /><br /><br />
-    <label for="sound">Sound:</label>
-    <input type="text" id="sound" name="sound" /><br /><br />
-    <label for="icon">Icon:</label>
-    <input type="text" id="icon" name="icon" /><br /><br />
+    <span>
+      <label for="animal">Animal:</label><br />
+      <input type="text" id="animal" name="animal" />
+    </span>
+    <span>
+      <label for="sound">Sound:</label><br />
+      <input type="text" id="sound" name="sound" />
+    </span>
+    <span>
+      <label for="icon">Icon:</label><br />
+      <input type="text" id="icon" name="icon" />
+    </span>
     <input type="submit" value="CREATE" />
   </form>
+  <ul></ul>
 </template>

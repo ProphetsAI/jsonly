@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" crossorigin>
   <link rel="prefetch" href="./webcomponents/home/home-navigation.html" />
   <link rel="prefetch" href="./webcomponents/home/home-view.html" />
   <link rel="prefetch" href="./webcomponents/animals/animals-view.html" />
@@ -12,10 +14,20 @@
   <link rel="prefetch" href="./webcomponents/webrtc/webrtc-view.html" />
   <link rel="prefetch" href="./webcomponents/sqlite/sqlite3-control.html" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="stylesheet" href="./assets/styles.css" />
   <title>JSonly</title>
 </head>
 
 <body>
+  <style>
+    body {
+      background-color: #040404;
+      color: antiquewhite;
+    }
+    main {
+      padding: 10px;
+    }
+  </style>
 
   <div id="app">
     <home-navigation></home-navigation>

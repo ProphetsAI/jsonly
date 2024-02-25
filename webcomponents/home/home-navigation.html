@@ -1,4 +1,11 @@
 <script>
+  const { isLoggedIn } = await import('./stores/Auth.js');
+
+  if (!isLoggedIn()) {
+    const ad = $("nav").$("[href='/admin']");
+    ad.classList.add("hidden");
+  }
+
   const nav = $("nav");
   $$("a.navlink").forEach(a => {
     a.on("click", event => {
@@ -23,15 +30,22 @@
     }
     let section = null;
     switch (route) {
-      case "/":
-        section = document.createElement("home-view");
-        break;
       case "/animals":
         section = document.createElement("animals-view");
         break;
       case "/webrtc-view":
         section = document.createElement("webrtc-view");
         break;
+      case "/admin":
+        if (isLoggedIn()) {
+          section = document.createElement("sqlite-control");
+          break;
+        }
+      case "/":
+        go("/login");
+        return;
+      case "/login":
+        section = document.createElement("home-login");
       default:
     }
     const main = document.querySelector("main");
@@ -45,14 +59,14 @@
       window.scrollX = 0;
       window.scrollY = 0;
     }
+    $$("a.navlink").forEach(a => {
+      a.classList.remove("active");
+      if (a.getAttribute("href") == location.pathname) {
+        a.classList.add("active");
+      }
+    });
   }
   // Check the initial URL
-  $$("a.navlink").forEach(a => {
-    a.classList.remove("active");
-    if (a.getAttribute("href") == location.pathname) {
-      a.classList.add("active");
-    }
-  });
   go(location.pathname);
 </script>
 
@@ -60,15 +74,17 @@
   nav {
     background-color: #144000;
     overflow: hidden;
+    margin: 0;
   }
 
   nav a {
     float: left;
     color: #ffd700;
     text-align: center;
-    padding: 14px 16px;
+    padding: 4vh;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 4vh;
+    font-weight: 600;
   }
 
   nav a:hover {
@@ -84,8 +100,9 @@
 
 <template>
   <nav>
-    <a class="navlink active" href="/">Home</a>
+    <a class="navlink active" href="/login">🏠</a>
     <a class="navlink" href="/animals">Animals</a>
     <a class="navlink" href="/webrtc-view">WebRTC</a>
+    <a class="navlink" href="/admin">Admin</a>
   </nav>
 </template>

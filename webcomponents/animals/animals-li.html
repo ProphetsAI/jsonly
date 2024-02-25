@@ -3,35 +3,43 @@
 
   const state = getState();
   const animal = { "id": state[0], "animal": state[1], "sound": state[2], "icon": state[3] };
-  const li = $("li");
-  li.before(animal.icon);
   const strong = $("strong");
+  strong.before(animal.icon);
   strong.innerHTML = `Beware of the ${animal.animal}!`;
-  strong.on("click", function() {
-    log(animal.sound);
-  });
 
   const quickDelete = $("quick-delete");
   quickDelete.state = { id: animal.id };
-  li.appendChild(quickDelete);
+  $("li").appendChild(quickDelete);
+
+  return {
+    makeSound: () => log(animal.sound)
+  }
 </script>
 
 <style>
+  :host {
+    width: 50vw;
+    display: flex;
+  }
   li {
+    width: 100%;
     cursor: pointer;
-    display: inline-block;
-    white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   strong {
     background-color: firebrick;
     color: white;
     padding: 4px;
+    text-align: center;
+    flex-grow:2
   }
 </style>
 
 <template>
   <li>
-    <strong></strong><quick-delete></quick-delete>
+    <strong onclick="this.script.makeSound()"></strong><quick-delete></quick-delete>
   </li>
 </template>

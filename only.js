@@ -70,7 +70,7 @@ Object.keys(webcomponents).forEach(function (prefix) {
 function getDOM(hostDataIDs) {
   let shadowDOM = document;
   for (let hostDataID of hostDataIDs) {
-    const host = shadowDOM.querySelector('[data-id="' + hostDataID + '"]')
+    const host = shadowDOM.querySelector('[data-id="' + hostDataID + '"]');
     if (host) { shadowDOM = host.shadowRoot; } else { return null; }
   }
   return shadowDOM;
@@ -80,15 +80,15 @@ let shadowDocument = getDOM(context);
 const $ = (query) => shadowDocument.querySelector(query);
 const $$ = (query) => shadowDocument.querySelectorAll(query);
 function getState() { return shadowDocument.host.state; }
-function setState(newState) { shadowDocument.host.state = newState; };
-function refresh() { getDOM([context[0]]).host.refresh() }
+function setState(newState) { shadowDocument.host.state = newState; }
+function refresh() { getDOM([context[0]]).host.refresh(); }
 ${scriptFragment ? scriptFragment.textContent : ''}
 return {};
 })();`;
-        const scriptsReturnValue = eval (scriptElement.textContent);
-        scriptsReturnValue.then(publicAPI => this.shadowRoot.publicAPI = publicAPI);
-        // this.shadowRoot.appendChild(scriptElement);
-        this.isAttached = true;
+          const scriptsReturnValue = eval (scriptElement.textContent);
+          scriptsReturnValue.then(publicAPI => this.shadowRoot.publicAPI = publicAPI);
+          // this.shadowRoot.appendChild(scriptElement);
+          this.isAttached = true;
         }
       });
     });

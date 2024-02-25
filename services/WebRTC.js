@@ -1,4 +1,5 @@
 import { log, error } from '../modules/Logger';
+const { insertAnimal } = await import('../apis/Animals.js');
 
 var WebRTC = (function () {
   var rtcConnection = null;
@@ -20,8 +21,7 @@ var WebRTC = (function () {
   }
 
   function messageReceived(event) {
-    log("Message received:", event.data);
-    //sqliteWorker.postMessage(event.data)
+    insertAnimal(event.data);
   };
 
   function dataChannelClosed(event) {

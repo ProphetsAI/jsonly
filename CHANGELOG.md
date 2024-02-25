@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- TODO: executeQuery without datasetID
+
 ## [0.8.4] - 2024-01-24
 
 ### Added
