@@ -102,6 +102,6 @@
     <a class="navlink active" href="/login">🏠</a>
     <a class="navlink" href="/animals">Animals</a>
     <a class="navlink" href="/webrtc-view">WebRTC</a>
-    ?{auth.login?:<a class="navlink" href="/admin">Admin</a>}
+    ${auth.login?<a class="navlink" href="/admin">Admin</a>}
   </nav>
 </template>
