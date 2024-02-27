@@ -1,5 +1,5 @@
 import { webcomponents } from './webcomponents';
-
+import { compile } from './modules/Compiler';
 HTMLElement.prototype.on = function (a, b, c) { return this.addEventListener(a, b, c); }
 HTMLElement.prototype.off = function (a, b) { return this.removeEventListener(a, b); }
 HTMLElement.prototype.$ = function (s) { return this.querySelector(s); }
@@ -13,9 +13,8 @@ HTMLElement.prototype.getDOM = function (hostDataIDs = this.hostDataIDs) {
       if (host) { shadowDOM = host.shadowRoot; } else { return null; }
     }
     return shadowDOM;
-  } else {
-    return this.getRootNode();
   }
+  return this.getRootNode();
 }
 Object.defineProperty(HTMLElement.prototype, "state", {
   get: function () { return this.dataset.state ? JSON.parse(this.dataset.state) : undefined; },
@@ -58,10 +57,13 @@ Object.keys(webcomponents).forEach(function (prefix) {
         disconnectedCallback() { while (this.shadowRoot.firstChild) this.shadowRoot.removeChild(this.shadowRoot.firstChild); }
         #render() {
           if (templateFragment) {
-            var clonedTemplate = templateFragment.content.cloneNode(true);
-            this.shadowRoot.appendChild(clonedTemplate);
+            const compiledTemplate = compile(templateFragment, this);
+            this.shadowRoot.appendChild(compiledTemplate);
           }
-          if (styleFragment) this.shadowRoot.appendChild(styleFragment.cloneNode(true));
+          if (styleFragment) {
+            const clonedStyle = styleFragment.cloneNode(true)
+            this.shadowRoot.appendChild(clonedStyle);
+          }
           const scriptElement = document.createElement("script");
           scriptElement.setAttribute("type", "module");
           // The IIFE creates a private scope for variables and functions in WebComponents
@@ -87,7 +89,6 @@ return {};
 })();`;
           const scriptsReturnValue = eval (scriptElement.textContent);
           scriptsReturnValue.then(publicAPI => this.shadowRoot.publicAPI = publicAPI);
-          // this.shadowRoot.appendChild(scriptElement);
           this.isAttached = true;
         }
       });

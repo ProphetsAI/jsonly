@@ -1,14 +1,9 @@
 <script>
   const { isLoggedIn } = await import('./stores/Auth.js');
 
-  if (!isLoggedIn()) {
-    const ad = $("nav").$("[href='/admin']");
-    ad.classList.add("hidden");
-  }
-
   const nav = $("nav");
   $$("a.navlink").forEach(a => {
-    a.on("click", event => {
+    a.on("click", function(event) {
       event.preventDefault();
       nav.$(".active").classList.remove("active");
       event.target.classList.add("active");
@@ -17,12 +12,12 @@
     });
   });
   // Back button clicked
-  window.addEventListener("popstate", event => {
+  window.addEventListener("popstate", function(event) {
     // TODO: fix back button
     if (event.state) {
       go(event.state.route, false);
     }
-  })
+  });
 
   window.go = function (route, addToHistory = true) {
     if (addToHistory) {
@@ -37,7 +32,7 @@
         section = document.createElement("webrtc-view");
         break;
       case "/admin":
-        if (isLoggedIn()) {
+        if (isLoggedIn(context)) {
           section = document.createElement("sqlite-control");
           break;
         }
@@ -96,6 +91,10 @@
     background-color: #ffd700;
     color: #144000;
   }
+
+  nav a.hidden {
+    display: none;
+  }
 </style>
 
 <template>
@@ -103,6 +102,6 @@
     <a class="navlink active" href="/login">🏠</a>
     <a class="navlink" href="/animals">Animals</a>
     <a class="navlink" href="/webrtc-view">WebRTC</a>
-    <a class="navlink" href="/admin">Admin</a>
+    ?{auth.login?:<a class="navlink" href="/admin">Admin</a>}
   </nav>
 </template>

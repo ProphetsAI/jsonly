@@ -1,17 +1,31 @@
-const { State } = await import("../modules/State");
+const { useStore } = await import("./Global");
+
+const init = {
+  auth: {
+    _obs: [],
+    admin: {
+      _value: "Admin",
+      _obs: [],
+    },
+    login: {
+      _value: false,
+      _obs: [],
+    },
+  },
+}
 
 export function login() {
-  console.log("login");
-  State.login = true;
+  const authStore = useStore("auth", init);
+  authStore.update("login", true);
 }
 
 export function logout() {
-  console.log("logout");
-  delete State.login;
+  const authStore = useStore("auth", init);
+  delete authStore.update("login", false);
 }
 
 export function isLoggedIn() {
-  console.log("isLoggedIn");
-  const login = State.login;
+  const authStore = useStore("auth", init);
+  const login = authStore.get("login");
   return login ? login : false;
 }

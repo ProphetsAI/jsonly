@@ -2,13 +2,17 @@
   const { login, logout } = await import('./stores/Auth.js');
 
   const loginBtn = $("#login");
-  loginBtn.on("click", function() {
-    login();
-  })
+  if(loginBtn) {
+    loginBtn.on("click", function() {
+      login();
+    })
+  }
   const logoutBtn = $("#logout");
-  logoutBtn.on("click", function() {
-    logout();
-  })
+  if (logoutBtn) {
+    logoutBtn.on("click", function() {
+      logout();
+    })
+  }
 </script>
 
 <template>
