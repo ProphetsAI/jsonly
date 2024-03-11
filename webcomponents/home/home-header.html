@@ -1,0 +1,111 @@
+<script>
+</script>
+
+<style>
+  h1 {
+    display: block;
+    font-family: "Tarrget Italic";
+    font-size: 7em;
+    margin: 0 auto;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .double-text-border {
+    position: relative;
+    background: linear-gradient(steelblue 0%, darkslategrey 25%, ghostwhite 50%, darkslategrey 65%, #144000 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 48px;
+    padding-left: 24px;
+    line-height: 1.2em;
+  }
+
+  .double-text-border::before {
+    position: absolute;
+    left: 0;
+    content: attr(title);
+    -webkit-text-stroke: 0.15em transparent;
+    z-index: -1;
+    line-height: 1.1em;
+    padding-right: 48px;
+    padding-left: 24px;
+    -webkit-animation: blink .4s forwards ease-in-out;
+  }
+
+  .double-text-border::after {
+    position: absolute;
+    content: attr(title);
+    -webkit-text-stroke: 0.2em #ffd700;
+    left: 0;
+    z-index: -2;
+    line-height: 1.1em;
+    padding-left: 24px;
+  }
+
+  @keyframes blink {
+    0% {
+      background: radial-gradient(circle 100px at 0 0, black, white 0%, black);
+      background-clip: text;
+    }
+
+    10% {
+      background: radial-gradient(circle 150px at 0 0, black, white 10%, black);
+      background-clip: text;
+    }
+
+    20% {
+      background: radial-gradient(circle 200px at 0 0, black, white 20%, black);
+      background-clip: text;
+    }
+
+    30% {
+      background: radial-gradient(circle 250px at 0 0, black, white 30%, black);
+      background-clip: text;
+    }
+
+    40% {
+      background: radial-gradient(circle 300px at 0 0, black, white 40%, black);
+      background-clip: text;
+    }
+
+    50% {
+      background: radial-gradient(circle 350px at 0 0, black, white 50%, black);
+      background-clip: text;
+    }
+
+    60% {
+      background: radial-gradient(circle 400px at 0 0, black, white 60%, black);
+      background-clip: text;
+    }
+
+    70% {
+      background: radial-gradient(circle 450px at 0 0, black, white 70%, black);
+      background-clip: text;
+    }
+
+    80% {
+      background: radial-gradient(circle 500px at 0 0, black, white 80%, black);
+      background-clip: text;
+    }
+
+    90% {
+      background: radial-gradient(circle 550px at 0 0, black, white 90%, black);
+      background-clip: text;
+    }
+
+    99% {
+      background: radial-gradient(circle 600px at 0 0, black, white 100%, black);
+      background-clip: text;
+    }
+
+    100% {
+      background: radial-gradient(circle 600px at 0 0, black, black, black);
+      background-clip: text;
+    }
+  }
+</style>
+
+<template>
+    <h1 class="double-text-border" title="Token">Token</h1>
+</template>

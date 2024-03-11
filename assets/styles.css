@@ -10,4 +10,9 @@
   :root { font-family: InterVariable, sans-serif; }
 }
 
-
+@font-face {
+  font-family: "Tarrget Italic";
+  src: url('fonts/tarrget/tarrgetital.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}

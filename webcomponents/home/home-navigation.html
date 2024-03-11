@@ -2,8 +2,21 @@
   const { isLoggedIn } = await import('./stores/Auth.js');
 
   const nav = $("nav");
+
+  window.onscroll = function () { stickyNavbar() };
+
+  var sticky = nav.offsetTop;
+
+  function stickyNavbar() {
+    if (window.pageYOffset >= sticky) {
+      nav.classList.add("sticky")
+    } else {
+      nav.classList.remove("sticky");
+    }
+  }
+
   $$("a.navlink").forEach(a => {
-    a.on("click", function(event) {
+    a.on("click", function (event) {
       event.preventDefault();
       nav.$(".active").classList.remove("active");
       event.target.classList.add("active");
@@ -12,7 +25,7 @@
     });
   });
   // Back button clicked
-  window.addEventListener("popstate", function(event) {
+  window.addEventListener("popstate", function (event) {
     // TODO: fix back button
     if (event.state) {
       go(event.state.route, false);
@@ -75,6 +88,7 @@
   nav a {
     float: left;
     color: #ffd700;
+    display: block;
     text-align: center;
     padding: 4vh;
     text-decoration: none;
@@ -95,9 +109,16 @@
   nav a.hidden {
     display: none;
   }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 </style>
 
 <template>
+  <home-header></home-header>
   <nav>
     <a class="navlink active" href="/login">🏠</a>
     <a class="navlink" href="/animals">Animals</a>

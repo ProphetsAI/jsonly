@@ -4,7 +4,7 @@ HTMLElement.prototype.on = function (a, b, c) { return this.addEventListener(a, 
 HTMLElement.prototype.off = function (a, b) { return this.removeEventListener(a, b); }
 HTMLElement.prototype.$ = function (s) { return this.querySelector(s); }
 HTMLElement.prototype.$$ = function (s) { return this.querySelectorAll(s); }
-HTMLElement.prototype.refresh = function () { this.dataset.date = new Date(); }
+HTMLElement.prototype.refresh = function () { this.dataset.date = Date.now(); }
 HTMLElement.prototype.getDOM = function (hostDataIDs = this.hostDataIDs) {
   if (hostDataIDs) {
     let shadowDOM = document;
@@ -55,9 +55,9 @@ Object.keys(webcomponents).forEach(function (prefix) {
           this.#render();
         }
         disconnectedCallback() { while (this.shadowRoot.firstChild) this.shadowRoot.removeChild(this.shadowRoot.firstChild); }
-        #render() {
+        async #render() {
           if (templateFragment) {
-            const compiledTemplate = compile(templateFragment, this);
+            const compiledTemplate = await compile(templateFragment, this);
             this.shadowRoot.appendChild(compiledTemplate);
           }
           if (styleFragment) {
