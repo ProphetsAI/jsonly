@@ -54,7 +54,9 @@ Object.keys(webcomponents).forEach(function (prefix) {
           };
           this.#render();
         }
-        disconnectedCallback() { while (this.shadowRoot.firstChild) this.shadowRoot.removeChild(this.shadowRoot.firstChild); }
+        disconnectedCallback() {
+          while (this.shadowRoot.firstChild) { this.shadowRoot.removeChild(this.shadowRoot.firstChild); };
+        }
         async #render() {
           if (templateFragment) {
             const compiledTemplate = await compile(templateFragment, this);

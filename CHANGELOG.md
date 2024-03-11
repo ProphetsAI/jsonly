@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - TODO: executeQuery without datasetID
 
+## [0.8.5] - 2024-03-11
+
+### Added
+
+- templates have now full reactive access to a store via ${store.field} or ${Store.funtion(argument)?returnValue1:returnValue2}
+
 ## [0.8.4] - 2024-01-24
 
 ### Added
