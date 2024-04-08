@@ -1,5 +1,5 @@
 <script>
-  const { isLoggedIn } = await import('./stores/Auth.js');
+  let { default: Auth } = await import('./stores/Auth.js');
 
   const nav = $("nav");
 
@@ -45,7 +45,7 @@
         section = document.createElement("webrtc-view");
         break;
       case "/admin":
-        if (isLoggedIn(context)) {
+        if (Auth.isLoggedIn(context)) {
           section = document.createElement("sqlite-control");
           break;
         }
@@ -123,6 +123,6 @@
     <a class="navlink active" href="/login">🏠</a>
     <a class="navlink" href="/animals">Animals</a>
     <a class="navlink" href="/webrtc-view">WebRTC</a>
-    ${auth.login?<a class="navlink" href="/admin">Admin</a>}
+    <a class="navlink" href="/admin">Admin</a>
   </nav>
 </template>

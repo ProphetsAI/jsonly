@@ -1,31 +1,38 @@
 const { useStore } = await import("./Global");
 
-const init = {
-  auth: {
-    _obs: [],
-    admin: {
-      _value: "Admin",
+export default (function () {
+  let authStore = null;
+
+  function init() {
+    return {
       _obs: [],
-    },
-    login: {
-      _value: false,
-      _obs: [],
-    },
-  },
-}
+      loggedIn: {
+        _obs: [],
+        _value: false,
+      }
+    };
+  }
 
-export function login() {
-  const authStore = useStore("auth", init);
-  authStore.update("login", true);
-}
+  function getInstance() {
+    if (!authStore) {
+      authStore = useStore("Auth", init());
+    }
+    return authStore;
+  }
 
-export function logout() {
-  const authStore = useStore("auth", init);
-  delete authStore.update("login", false);
-}
-
-export function isLoggedIn() {
-  const authStore = useStore("auth", init);
-  const login = authStore.get("login");
-  return login ? login : false;
-}
+  function login() {
+    getInstance().update("loggedIn", true);
+  }
+  function logout() {
+    delete getInstance().update("loggedIn", false);
+  }
+  function isLoggedIn() {
+    const login = getInstance().get("loggedIn");
+    return login;
+  }
+  return {
+    login,
+    logout,
+    isLoggedIn,
+  };
+})();

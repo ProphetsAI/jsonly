@@ -1,16 +1,16 @@
 <script>
-  const { login, logout } = await import('./stores/Auth.js');
+  let { default: Auth } = await import('./stores/Auth.js');
 
   const loginBtn = $("#login");
   if(loginBtn) {
     loginBtn.on("click", function() {
-      login();
+      Auth.login();
     })
   }
   const logoutBtn = $("#logout");
   if (logoutBtn) {
     logoutBtn.on("click", function() {
-      logout();
+      Auth.logout();
     })
   }
 </script>
